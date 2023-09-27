@@ -4,17 +4,15 @@ import "./index.css";
 
 import "bootstrap/scss/bootstrap.scss";
 
-import App from "./App";
-
 import reportWebVitals from "./reportWebVitals";
 import FBX from "./FBX";
-import App2 from "./App2";
+import Room from "./Room";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     {/* <App /> */}
-    <App2 />
+    <Room />
     {/* <FBX /> */}
   </>
 );

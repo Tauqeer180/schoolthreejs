@@ -7,7 +7,7 @@ import wallImg from "./assets/wall.jpeg";
 import rooImg from "./assets/roof.jpg";
 window.bootstrap = require("bootstrap");
 
-function App2() {
+function Room() {
   // three js start
 
   useEffect(() => {
@@ -134,7 +134,6 @@ function App2() {
     // shape.add(ceiling);
     shape.add(floor);
 
-    
     scene.add(shape);
 
     // Render Loop
@@ -221,4 +220,4 @@ function App2() {
   );
 }
 
-export default App2;
+export default Room;
