@@ -4,7 +4,9 @@ import "./custom.scss";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import wallImg from "./assets/wall.jpeg";
-import rooImg from "./assets/roof.jpg";
+import roofImg from "./assets/roof.jpg";
+import grassImg from "./assets/grass.webp";
+
 window.bootstrap = require("bootstrap");
 
 function Room() {
@@ -21,10 +23,10 @@ function Room() {
       0.1,
       1000
     );
-    camera.position.z = 18;
+    camera.position.z = 25;
     camera.position.x = 4;
     camera.position.y = 4;
-    // camera.rotation.x = Math.PI;
+    // camera.rotation.x = Math.PI / 2;
     // camera.rotation.y = Math.PI / 4;
     // camera.rotation.z = Math.PI / 2;
     // camera.lookAt(new THREE.Vector3(0, 0, 0));
@@ -45,9 +47,15 @@ function Room() {
     var wallThickness = 0.01;
 
     var walltexture = textureLoader.load(wallImg);
-    var roofTexture = textureLoader.load(rooImg);
+    var roofTexture = textureLoader.load(roofImg);
+    var grassTexture = textureLoader.load(grassImg);
 
     var wallMaterial = new THREE.MeshBasicMaterial({ map: walltexture });
+    var grassMaterial = new THREE.MeshBasicMaterial({ map: grassTexture });
+
+    // wallMaterial.wrapS = THREE.RepeatWrapping;
+    // wallMaterial.wrapT = THREE.RepeatWrapping;
+    // wallMaterial?.repeat?.set(4, 4);
     var roofMaterial = new THREE.MeshBasicMaterial({ color: "grey" });
     var floorMaterial = new THREE.MeshBasicMaterial({ color: "lightgreen" });
 
@@ -57,9 +65,16 @@ function Room() {
       wallThickness,
       roomSize
     );
+    var grassFloorGeometry = new THREE.BoxGeometry(
+      roomSize * 6,
+      wallThickness,
+      roomSize * 8
+    );
     var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+    var grassFloor = new THREE.Mesh(grassFloorGeometry, grassMaterial);
 
     floor.position.y = -roomSize / 2;
+    grassFloor.position.y = -roomSize / 2;
     // scene.add(floor);
 
     // Ceiling
@@ -122,9 +137,34 @@ function Room() {
     rightRoof.position.y = 2.7;
     rightRoof.position.z = Math.PI / 2.5;
 
+    // School Boundary
+
+    var leftSchoolWallGeometry = new THREE.BoxGeometry(
+      wallThickness,
+      roomSize,
+      roomSize * 8
+    );
+    var frontSchoolWallGeometry = new THREE.BoxGeometry(
+      roomSize * 6,
+      roomSize,
+      wallThickness
+    );
+    var leftSchoolWall = new THREE.Mesh(leftSchoolWallGeometry, wallMaterial);
+    leftSchoolWall.position.x = -roomSize * 3;
+    var rightSchoolWall = leftSchoolWall.clone();
+    rightSchoolWall.position.x = roomSize * 3;
+    var frontSchoolWall = new THREE.Mesh(frontSchoolWallGeometry, wallMaterial);
+    frontSchoolWall.position.z = roomSize * 4;
+    var backSchoolWall = frontSchoolWall.clone();
+    backSchoolWall.position.z = -roomSize * 4;
+
     var shape = new THREE.Group();
     // shape.add(sphere);
     // shape.add(cube);
+    shape.add(leftSchoolWall);
+    shape.add(rightSchoolWall);
+    shape.add(frontSchoolWall);
+    shape.add(backSchoolWall);
     shape.add(leftRoof);
     shape.add(rightRoof);
     shape.add(backWall);
@@ -133,6 +173,7 @@ function Room() {
     shape.add(leftWall);
     // shape.add(ceiling);
     shape.add(floor);
+    shape.add(grassFloor);
 
     scene.add(shape);
 
@@ -181,6 +222,12 @@ function Room() {
     document.addEventListener("mouseup", onMouseUp, false);
     document.addEventListener("mousemove", onMouseMove, false);
 
+    window.addEventListener("wheel", (event) => {
+      const delta = Math.sign(event.deltaY);
+      camera.position.z += delta;
+      console.info("Mouse Delta ", delta);
+    });
+
     var animate = function () {
       requestAnimationFrame(animate);
 
@@ -206,7 +253,7 @@ function Room() {
   return (
     <div className="container-fluid">
       <div className="row h-100">
-        <div className="col-lg-6 bg-info p-0 max-h-100vh">
+        <div className="col-lg-12 bg-info p-0 max-h-100vh">
           <div className="card  rounded-0 ">
             <div className="card-body vh-100 p-0 bg-primary" id="">
               <div id="threeJsComponent"></div>
