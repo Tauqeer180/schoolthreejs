@@ -1,0 +1,80 @@
+// Override default variables before the import
+$primary: #1d527c;
+$dark:#000000;
+$breakpoint-tablet: 768px;
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+
+.max-h-100vh{
+    max-height: 100vh;
+}
+.bg-primary{
+    background-color: #1d527c;
+}
+.outlooker-fields{
+    input:focus{
+        outline: none;
+    }
+    label{
+        font-weight: 500!important;
+    }
+
+}
+
+.advance-option-div{
+    label{
+        font-weight: 500!important;
+    }
+}
+.bg-primary-light{
+    background-color: rgba(29, 82, 124, 0.09);
+}
+.card-body{
+    .input-group{
+        span{
+            font-weight: 500!important;
+        }
+    }
+}
+
+.checkout{
+
+        label{
+            font-weight: 500!important;
+        }
+        .req-spec-btn:hover{
+            color: white!important;
+        }
+}
+.q-mark:hover{
+        color: white!important;
+    }
+
+.req-specs-show{
+.file-type-check-div{
+    .file-type-check{
+        label{
+            font-weight: 500!important;
+        }
+    }
+}
+
+
+    .input-group-text{
+            background-color: #1882A8!important;
+            background: #1882A8!important;
+        }
+
+
+.req-spec-btn:hover{
+    color: white!important;
+}
+}
+
+
+#threeJsComponent{
+  //max-width: 700px!important;
+  //max-height:100%!important;
+  //overflow: scroll!important;
+}
+
