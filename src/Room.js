@@ -1,16 +1,18 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./custom.scss";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import wallImg from "./assets/wall.jpeg";
 import roofImg from "./assets/roof.jpg";
 import grassImg from "./assets/grass.webp";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 window.bootstrap = require("bootstrap");
 
 function Room() {
   // three js start
-
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     var scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf6eedc);
@@ -160,10 +162,6 @@ function Room() {
     const wallsAndRoofGroup = new THREE.Group();
     const otherObjectsGroup = new THREE.Group();
     wallsAndRoofGroup.add(
-      leftSchoolWall,
-      rightSchoolWall,
-      frontSchoolWall,
-      backSchoolWall,
       leftRoof,
       rightRoof,
       backWall,
@@ -172,12 +170,17 @@ function Room() {
       leftWall,
       floor
     );
-    otherObjectsGroup.add(grassFloor);
-
+    otherObjectsGroup.add(
+      grassFloor,
+      leftSchoolWall,
+      rightSchoolWall,
+      frontSchoolWall,
+      backSchoolWall
+    );
     // Add the groups to the scene
     scene.add(wallsAndRoofGroup);
     scene.add(otherObjectsGroup);
-    
+
     // Create a raycaster and a vector to store mouse coordinates
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -198,7 +201,8 @@ function Room() {
 
       if (intersects.length > 0) {
         // Tree is clicked
-        alert("Tree clicked!");
+        // alert("Tree clicked!");
+        setShowModal(true);
       }
     }
 
@@ -233,7 +237,20 @@ function Room() {
           <div className="card  rounded-0 ">
             <div className="card-body vh-100 p-0 bg-primary" id="">
               <div id="threeJsComponent"></div>
-
+              <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Tree Clicked</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Your Name of building</Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    variant="secondary"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
               {/* <img className='h-100 w-100' src={img}/> */}
             </div>
           </div>
@@ -244,24 +261,3 @@ function Room() {
 }
 
 export default Room;
-
-// var houseShape = new THREE.Group();
-// houseShape.add(
-//   leftSchoolWall,
-//   rightSchoolWall,
-//   frontSchoolWall,
-//   backSchoolWall
-// );
-// scene.add(houseShape);
-// var roofShape = new THREE.Group();
-// roofShape.add(
-//   leftRoof,
-//   rightRoof,
-//   backWall,
-//   frontWall,
-//   rightWall,
-//   leftWall
-// );
-// scene.add(roofShape);
-// scene.add(floor);
-// scene.add(grassFloor);

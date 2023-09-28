@@ -2,12 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "bootstrap/scss/bootstrap.scss";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
-// import FBX from "./FBX";
-// import Room from "./Room";
-// import TreeScene from "./Tree";
+import Room from "./Room";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +13,6 @@ root.render(
     <Room />
     {/* <FBX /> */}
     {/* <TreeScene /> */}
-    {/* <> hhhhhhh</> */}
   </>
 );
 
