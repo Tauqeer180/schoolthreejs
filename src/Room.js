@@ -1,12 +1,11 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import "./custom.scss";
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import wallImg from "./assets/wall.jpeg";
 import roofImg from "./assets/roof.jpg";
 import grassImg from "./assets/grass.webp";
-
 window.bootstrap = require("bootstrap");
 
 function Room() {
@@ -14,6 +13,7 @@ function Room() {
 
   useEffect(() => {
     var scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xf6eedc);
     var textureLoader = new THREE.TextureLoader();
 
     // Camera
@@ -23,13 +23,7 @@ function Room() {
       0.1,
       1000
     );
-    camera.position.z = 25;
-    camera.position.x = 4;
-    camera.position.y = 4;
-    // camera.rotation.x = Math.PI / 2;
-    // camera.rotation.y = Math.PI / 4;
-    // camera.rotation.z = Math.PI / 2;
-    // camera.lookAt(new THREE.Vector3(0, 0, 0));
+    // camera position
 
     // Renderer
     var renderer = new THREE.WebGLRenderer();
@@ -39,9 +33,6 @@ function Room() {
       .getElementById("threeJsComponent")
       .appendChild(renderer.domElement);
 
-    // document.body.getElementById('threeJsComponent').appendChild(renderer.domElement);
-
-    // Add ambient light to the scene
     // Room
     var roomSize = 4;
     var wallThickness = 0.01;
@@ -53,9 +44,6 @@ function Room() {
     var wallMaterial = new THREE.MeshBasicMaterial({ map: walltexture });
     var grassMaterial = new THREE.MeshBasicMaterial({ map: grassTexture });
 
-    // wallMaterial.wrapS = THREE.RepeatWrapping;
-    // wallMaterial.wrapT = THREE.RepeatWrapping;
-    // wallMaterial?.repeat?.set(4, 4);
     var roofMaterial = new THREE.MeshBasicMaterial({ color: "grey" });
     var floorMaterial = new THREE.MeshBasicMaterial({ color: "lightgreen" });
 
@@ -75,12 +63,10 @@ function Room() {
 
     floor.position.y = -roomSize / 2;
     grassFloor.position.y = -roomSize / 2;
-    // scene.add(floor);
 
     // Ceiling
     var ceiling = new THREE.Mesh(floorGeometry, roofMaterial);
     ceiling.position.y = roomSize / 2;
-    // scene.add(ceiling);
 
     // Left Wall
     var leftWallGeometry = new THREE.BoxGeometry(
@@ -90,12 +76,10 @@ function Room() {
     );
     var leftWall = new THREE.Mesh(leftWallGeometry, wallMaterial);
     leftWall.position.x = -roomSize;
-    // scene.add(leftWall);
 
     // Right Wall
     var rightWall = leftWall.clone();
     rightWall.position.x = roomSize;
-    // scene.add(rightWall);
 
     // Front Wall
     var frontWallGeometry = new THREE.BoxGeometry(
@@ -158,98 +142,90 @@ function Room() {
     var backSchoolWall = frontSchoolWall.clone();
     backSchoolWall.position.z = -roomSize * 4;
 
-    var shape = new THREE.Group();
-    // shape.add(sphere);
-    // shape.add(cube);
-    shape.add(leftSchoolWall);
-    shape.add(rightSchoolWall);
-    shape.add(frontSchoolWall);
-    shape.add(backSchoolWall);
-    shape.add(leftRoof);
-    shape.add(rightRoof);
-    shape.add(backWall);
-    shape.add(frontWall);
-    shape.add(rightWall);
-    shape.add(leftWall);
-    // shape.add(ceiling);
-    shape.add(floor);
-    shape.add(grassFloor);
+    // here is defined the tree
+    const trunkGeometry = new THREE.CylinderGeometry(0.1, 0.1, 4, 9);
+    const leavesGeometry = new THREE.SphereGeometry(1, 8, 10);
+    // defined the mesbasicmaterial
+    const trunkMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
+    const leavesMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 
-    scene.add(shape);
+    // Create mesh for the trunk and leaves
+    const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+    const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
 
-    // Render Loop
+    // Add the trunk and leaves to the scene
+    scene.add(trunk);
+    scene.add(leaves);
+    // Create groups
+    const wallsAndRoofGroup = new THREE.Group();
+    const otherObjectsGroup = new THREE.Group();
+    wallsAndRoofGroup.add(
+      leftSchoolWall,
+      rightSchoolWall,
+      frontSchoolWall,
+      backSchoolWall,
+      leftRoof,
+      rightRoof,
+      backWall,
+      frontWall,
+      rightWall,
+      leftWall,
+      floor
+    );
+    otherObjectsGroup.add(grassFloor);
 
-    var isDragging = false;
-    var previousMousePosition = {
-      x: 0,
-      y: 0,
-    };
+    // Add the groups to the scene
+    scene.add(wallsAndRoofGroup);
+    scene.add(otherObjectsGroup);
+    
+    // Create a raycaster and a vector to store mouse coordinates
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
 
-    function onMouseDown(event) {
-      isDragging = true;
-    }
+    // Add event listener for mouse clicks
+    window.addEventListener("click", onMouseClick, false);
 
-    function onMouseUp(event) {
-      isDragging = false;
-    }
+    function onMouseClick(event) {
+      // Calculate mouse position in normalized device coordinates
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-    function onMouseMove(event) {
-      if (isDragging) {
-        var deltaMove = {
-          x: event.offsetX - previousMousePosition.x,
-          y: event.offsetY - previousMousePosition.y,
-        };
-        var deltaRotationQuaternion = new THREE.Quaternion().setFromEuler(
-          new THREE.Euler(
-            toRadians(deltaMove.y * 0.1),
-            toRadians(deltaMove.x * 0.1),
-            0,
-            "XYZ"
-          )
-        );
-        shape.quaternion.multiplyQuaternions(
-          deltaRotationQuaternion,
-          shape.quaternion
-        );
+      // Set ray's origin at camera's position
+      raycaster.setFromCamera(mouse, camera);
+
+      // Check for intersections with the tree
+      const intersects = raycaster.intersectObject(wallsAndRoofGroup);
+
+      if (intersects.length > 0) {
+        // Tree is clicked
+        alert("Tree clicked!");
       }
-      previousMousePosition = {
-        x: event.offsetX,
-        y: event.offsetY,
-      };
     }
 
-    document.addEventListener("mousedown", onMouseDown, false);
-    document.addEventListener("mouseup", onMouseUp, false);
-    document.addEventListener("mousemove", onMouseMove, false);
-
-    window.addEventListener("wheel", (event) => {
-      const delta = Math.sign(event.deltaY);
-      camera.position.z += delta;
-      console.info("Mouse Delta ", delta);
-    });
+    // THIS IS rotate PROPERTY
+    const orbit = new OrbitControls(camera, renderer.domElement);
+    camera.position.set(4, 4, 25);
+    orbit.update();
 
     var animate = function () {
       requestAnimationFrame(animate);
 
-      // Rotation for demonstration
-      // cube.rotation.x += 0.01;
-      // cube.rotation.y += 0.01;
+      trunk.position.x = -10;
+      trunk.position.y = -0.5;
+      trunk.position.z = 0;
 
-      // sphere.rotation.y += 0.01;
-      // sphere.rotation.z += 0.01;
+      leaves.position.x = -10;
+      leaves.position.y = 0.5;
+      leaves.position.z = 0;
 
       renderer.render(scene, camera);
     };
-
     animate();
-
-    // Helper function to convert degrees to radians
-    function toRadians(degrees) {
-      return (degrees * Math.PI) / 180;
-    }
+    return () => {
+      window.removeEventListener("click", onMouseClick);
+    };
   }, []);
   //  three js ended here
-
   return (
     <div className="container-fluid">
       <div className="row h-100">
@@ -268,3 +244,24 @@ function Room() {
 }
 
 export default Room;
+
+// var houseShape = new THREE.Group();
+// houseShape.add(
+//   leftSchoolWall,
+//   rightSchoolWall,
+//   frontSchoolWall,
+//   backSchoolWall
+// );
+// scene.add(houseShape);
+// var roofShape = new THREE.Group();
+// roofShape.add(
+//   leftRoof,
+//   rightRoof,
+//   backWall,
+//   frontWall,
+//   rightWall,
+//   leftWall
+// );
+// scene.add(roofShape);
+// scene.add(floor);
+// scene.add(grassFloor);
