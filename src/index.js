@@ -4,15 +4,18 @@ import "./index.css";
 import "bootstrap/scss/bootstrap.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
-import Room from "./Room";
+import MultipleRoom from "./MultipleRooms";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     {/* <App /> */}
-    <Room />
+    {/* <Room /> */}
     {/* <FBX /> */}
     {/* <TreeScene /> */}
+    {/* <ZoomAndModalScene/> */}
+    {/* <RoomPosition /> */}
+    <MultipleRoom />
   </>
 );
 
