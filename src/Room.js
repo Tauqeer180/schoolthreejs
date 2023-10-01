@@ -25,8 +25,9 @@ function Room() {
       0.1,
       1000
     );
-    // camera position
+    // camera.position.set(25, 25, 40);
 
+    // camera position
     // Renderer
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -207,9 +208,9 @@ function Room() {
     }
 
     // THIS IS rotate PROPERTY
-    const orbit = new OrbitControls(camera, renderer.domElement);
-    camera.position.set(4, 4, 25);
-    orbit.update();
+    // camera.position.set(25, 25, 0);
+    // const orbit = new OrbitControls(camera, renderer.domElement);
+    // orbit.update();
 
     var animate = function () {
       requestAnimationFrame(animate);

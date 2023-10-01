@@ -11,7 +11,6 @@ import Button from "react-bootstrap/Button";
 
 function MultipleRoom() {
   const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState("");
   const [selectedBuilding, setSelectedBuilding] = useState(null);
   const buildingInfo = [
     {
@@ -73,70 +72,14 @@ function MultipleRoom() {
     var roofMaterial = new THREE.MeshBasicMaterial({ color: "grey" });
     var floorMaterial = new THREE.MeshBasicMaterial({ color: "lightgreen" });
 
-    var floorGeometry = new THREE.BoxGeometry(
-      roomSize,
-      wallThickness,
-      roomSize
-    );
     var grassFloorGeometry = new THREE.BoxGeometry(
       roomSize * 6,
       wallThickness,
       roomSize * 15
     );
-    var floor = new THREE.Mesh(floorGeometry, floorMaterial);
     var grassFloor = new THREE.Mesh(grassFloorGeometry, grassMaterial);
 
-    floor.position.y = -roomSize / 2;
     grassFloor.position.y = -roomSize / 2;
-
-    var ceiling = new THREE.Mesh(floorGeometry, roofMaterial);
-    ceiling.position.y = roomSize / 2;
-
-    var leftWallGeometry = new THREE.BoxGeometry(
-      wallThickness,
-      roomSize,
-      roomSize
-    );
-    var leftWall = new THREE.Mesh(leftWallGeometry, wallMaterial);
-    leftWall.position.x = -roomSize;
-
-    var rightWall = leftWall.clone();
-    rightWall.position.x = roomSize;
-
-    var frontWallGeometry = new THREE.BoxGeometry(
-      roomSize * 2,
-      roomSize,
-      wallThickness
-    );
-    var frontWall = new THREE.Mesh(frontWallGeometry, wallMaterial);
-    frontWall.position.z = -roomSize / 2;
-
-    var backWall = frontWall.clone();
-    backWall.position.z = roomSize / 2;
-
-    var roofGeometry = new THREE.PlaneGeometry(roomSize * 2, roomSize / 1.2);
-
-    var leftRoof = new THREE.Mesh(
-      roofGeometry,
-      new THREE.MeshBasicMaterial({
-        map: roofTexture,
-        side: THREE.DoubleSide,
-      })
-    );
-    leftRoof.rotation.x = Math.PI / 3.65;
-    leftRoof.position.y = 2.7;
-    leftRoof.position.z = -Math.PI / 2.5;
-
-    var rightRoof = new THREE.Mesh(
-      roofGeometry,
-      new THREE.MeshBasicMaterial({
-        map: roofTexture,
-        side: THREE.DoubleSide,
-      })
-    );
-    rightRoof.rotation.x = -Math.PI / 3.65;
-    rightRoof.position.y = 2.7;
-    rightRoof.position.z = Math.PI / 2.5;
 
     var leftSchoolWallGeometry = new THREE.BoxGeometry(
       wallThickness,
@@ -178,7 +121,7 @@ function MultipleRoom() {
       const house = new THREE.Group();
 
       const floorGeometry = new THREE.BoxGeometry(
-        roomSize,
+        roomSize * 2,
         wallThickness,
         roomSize
       );
@@ -277,17 +220,8 @@ function MultipleRoom() {
     scene.add(trunk);
     scene.add(leaves);
 
-    const wallsAndRoofGroup = new THREE.Group();
     const otherObjectsGroup = new THREE.Group();
-    wallsAndRoofGroup.add(
-      leftRoof,
-      rightRoof,
-      backWall,
-      frontWall,
-      rightWall,
-      leftWall,
-      floor
-    );
+
     otherObjectsGroup.add(
       grassFloor,
       leftSchoolWall,
@@ -299,7 +233,7 @@ function MultipleRoom() {
     scene.add(otherObjectsGroup);
 
     const orbit = new OrbitControls(camera, renderer.domElement);
-    camera.position.set(4, 4, 25);
+    camera.position.set(4, 4, 0);
     orbit.update();
 
     var animate = function () {
