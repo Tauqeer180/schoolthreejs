@@ -232,8 +232,8 @@ function MultipleRoom() {
     // scene.add(wallsAndRoofGroup);
     scene.add(otherObjectsGroup);
 
+    camera.position.set(20, 20, 0);
     const orbit = new OrbitControls(camera, renderer.domElement);
-    camera.position.set(4, 4, 0);
     orbit.update();
 
     var animate = function () {
