@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.modal-dialog{
+  position: absolute !important;
+  right: 10px !important;
+  height: 90vh !important;
+}
+.modal-content{
+  height: 90vh;
+}
+.modal-backdrop.fade {
+  opacity: 0.1 !important;
+}

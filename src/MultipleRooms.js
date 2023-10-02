@@ -111,8 +111,18 @@ function MultipleRoom() {
 
       const intersects = raycaster.intersectObject(objToClick);
 
-      if (intersects.length > 0) {
+      if (!showModal && intersects.length > 0) {
         setSelectedBuilding(objId);
+        camera.position.z = objToClick.position.z;
+        camera.position.x = 10;
+        camera.position.y = 10;
+        // camera.fov = 30;
+        camera.lookAt(objToClick.position);
+        camera.updateProjectionMatrix();
+        // camera.position.z = 30;
+        // camera.position.set(Math.PI / 4, Math.PI / 4, Math.PI / 4);
+        // camera.rotation.set(-Math.PI / 2, Math.PI / 2, Math.PI / 2);
+
         setShowModal(true);
       }
     }
@@ -196,6 +206,12 @@ function MultipleRoom() {
 
       scene.add(house);
 
+      function onDocumentMouseWheel(event) {
+        camera.position.z = 0; // Adjust the factor (0.1) as needed for the zoom speed
+        renderer.render(scene, camera);
+      }
+      document.addEventListener("wheel", onDocumentMouseWheel);
+
       window.addEventListener(
         "click",
         (event) => onMouseClick(event, house, buildingId),
@@ -267,26 +283,6 @@ function MultipleRoom() {
           <div className="card  rounded-0 ">
             <div className="card-body vh-100 p-0 bg-primary" id="">
               <div id="threeJsComponent"></div>
-              {/* <Modal show={showModal} onHide={closeModal}>
-                <Modal.Header closeButton>
-                  <Modal.Title>
-                    {selectedBuilding
-                      ? `Building ${selectedBuilding} Clicked`
-                      : "Tree Clicked"}
-                  </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  {selectedBuilding
-                    ? buildingInfo.find((b) => b.id === selectedBuilding)
-                        .content
-                    : "Content for Tree"}
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={closeModal}>
-                    Close
-                  </Button>
-                </Modal.Footer>
-              </Modal> */}
 
               <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
