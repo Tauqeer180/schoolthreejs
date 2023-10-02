@@ -50,7 +50,6 @@ function MultipleRoom() {
       0.1,
       1000
     );
-
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -101,25 +100,39 @@ function MultipleRoom() {
     backSchoolWall.position.z = -roomSize * 7.5;
 
     const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-
+    const mouse = new THREE.Vector3(0, 0, -1).applyQuaternion(
+      camera.quaternion
+    );
     function onMouseClick(event, objToClick, objId) {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
       raycaster.setFromCamera(mouse, camera);
-
       const intersects = raycaster.intersectObject(objToClick);
-
-      if (intersects.length > 0) {
+      if (!showModal && intersects.length > 0) {
         setSelectedBuilding(objId);
+        camera.position.z = objToClick.position.z;
+        camera.position.x = 10;
+        camera.position.y = 10;
+        // camera.fov = 30;
+        camera.lookAt(objToClick.position);
+        camera.updateProjectionMatrix();
+        // camera.position.z = 30;
+        // camera.position.set(Math.PI / 4, Math.PI / 4, Math.PI / 4);
+        // camera.rotation.set(-Math.PI / 2, Math.PI / 2, Math.PI / 2);
         setShowModal(true);
       }
+      // if (intersects.length > 0) {
+      //   setSelectedBuilding(objId);
+      //   camera.position.z = objToClick.position.z;
+      //   camera.fov = 40;
+      //   camera.updateProjectionMatrix();
+      //   // camera.position.set(Math.PI / 4, Math.PI / 4, Math.PI / 4);
+      //   // camera.rotation.set(-Math.PI / 2, Math.PI / 2, Math.PI / 2);
+      //   setShowModal(true);
+      // }
     }
-
     function createHouse(x, z, buildingId) {
       const house = new THREE.Group();
-
       const floorGeometry = new THREE.BoxGeometry(
         roomSize * 2,
         wallThickness,
@@ -190,19 +203,20 @@ function MultipleRoom() {
         leftRoof,
         rightRoof
       );
-
       house.position.x = x;
       house.position.z = z;
-
       scene.add(house);
-
       window.addEventListener(
         "click",
         (event) => onMouseClick(event, house, buildingId),
         false
       );
     }
-
+    function onDocumentMouseWheel(event) {
+      camera.position.z = 0; // Adjust the factor (0.1) as needed for the zoom speed
+      renderer.render(scene, camera);
+    }
+    document.addEventListener("wheel", onDocumentMouseWheel);
     createHouse(-4, -spacing, 1);
     createHouse(-4, spacing, 2); //row 1 house
     createHouse(-4, 0, 3); //row 3 house
@@ -231,8 +245,8 @@ function MultipleRoom() {
     );
     // scene.add(wallsAndRoofGroup);
     scene.add(otherObjectsGroup);
-
     camera.position.set(20, 20, 0);
+    camera.lookAt(scene.position);
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.update();
 
@@ -255,48 +269,36 @@ function MultipleRoom() {
       window.removeEventListener("click", onMouseClick);
     };
   }, []);
-
   const closeModal = () => {
     setShowModal(false);
     setSelectedBuilding(null);
   };
+
   return (
     <div className="container-fluid">
       <div className="row h-100">
-        <div className="col-lg-12 bg-info p-0 max-h-100vh">
+        <div className="col-lg-12 bg-info p-0">
           <div className="card  rounded-0 ">
-            <div className="card-body vh-100 p-0 bg-primary" id="">
+            <div className="card-body vh-100 p-0  ">
               <div id="threeJsComponent"></div>
-              {/* <Modal show={showModal} onHide={closeModal}>
+              <Modal
+                show={showModal}
+                onHide={closeModal}
+                style={{
+                  position: "absolute",
+                  top: `100px`,
+                  left: `300px`,
+                }}
+              >
                 <Modal.Header closeButton>
-                  <Modal.Title>
-                    {selectedBuilding
-                      ? `Building ${selectedBuilding} Clicked`
-                      : "Tree Clicked"}
-                  </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  {selectedBuilding
-                    ? buildingInfo.find((b) => b.id === selectedBuilding)
-                        .content
-                    : "Content for Tree"}
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={closeModal}>
-                    Close
-                  </Button>
-                </Modal.Footer>
-              </Modal> */}
-
-              <Modal show={showModal} onHide={closeModal}>
-                <Modal.Header closeButton>
+                  {/*   */}
                   <Modal.Title>
                     {selectedBuilding !== null &&
                       buildingInfo?.find((b) => b?.id === selectedBuilding)
                         .name}
                   </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="custom-modal-content">
                   {selectedBuilding !== null &&
                     buildingInfo?.find((b) => b.id === selectedBuilding)
                       .content}
