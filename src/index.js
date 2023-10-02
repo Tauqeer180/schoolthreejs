@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import "bootstrap/scss/bootstrap.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import MultipleRoom from "./MultipleRooms";
-
+import ZoomAndModalScene from "./ZoomIn";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
@@ -13,7 +13,7 @@ root.render(
     {/* <Room /> */}
     {/* <FBX /> */}
     {/* <TreeScene /> */}
-    {/* <ZoomAndModalScene/> */}
+    {/* <ZoomAndModalScene /> */}
     {/* <RoomPosition /> */}
     <MultipleRoom />
   </>
