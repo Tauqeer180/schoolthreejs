@@ -19,6 +19,7 @@ code {
 }
 .modal-content{
   height: 90vh;
+  width: 300px !important;
 }
 .modal-backdrop.fade {
   opacity: 0.1 !important;
