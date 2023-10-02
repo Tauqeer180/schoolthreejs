@@ -12,11 +12,15 @@ code {
     monospace;
 }
 
-.custom-modal-content {
-  height: 350px;
-  overflow-y: auto;
+.modal-dialog{
+  position: absolute !important;
+  right: 10px !important;
+  height: 90vh !important;
 }
-
- /* .fade {
-  opacity: 0 !important;
-} */
+.modal-content{
+  height: 90vh;
+  width: 300px !important;
+}
+.modal-backdrop.fade {
+  opacity: 0.1 !important;
+}

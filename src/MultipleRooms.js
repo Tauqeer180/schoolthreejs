@@ -206,6 +206,13 @@ function MultipleRoom() {
       house.position.x = x;
       house.position.z = z;
       scene.add(house);
+
+      function onDocumentMouseWheel(event) {
+        camera.position.z = 0; // Adjust the factor (0.1) as needed for the zoom speed
+        renderer.render(scene, camera);
+      }
+      document.addEventListener("wheel", onDocumentMouseWheel);
+
       window.addEventListener(
         "click",
         (event) => onMouseClick(event, house, buildingId),
@@ -281,15 +288,8 @@ function MultipleRoom() {
           <div className="card  rounded-0 ">
             <div className="card-body vh-100 p-0  ">
               <div id="threeJsComponent"></div>
-              <Modal
-                show={showModal}
-                onHide={closeModal}
-                style={{
-                  position: "absolute",
-                  top: `100px`,
-                  left: `300px`,
-                }}
-              >
+
+              <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                   {/*   */}
                   <Modal.Title>
