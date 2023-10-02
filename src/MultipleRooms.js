@@ -108,7 +108,8 @@ function MultipleRoom() {
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObject(objToClick);
-      if (!showModal && intersects.length > 0) {
+
+      if (intersects.length > 0) {
         setSelectedBuilding(objId);
         camera.position.z = objToClick.position.z;
         camera.position.x = 10;
