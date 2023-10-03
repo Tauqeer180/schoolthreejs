@@ -5,15 +5,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import MultipleRoom from "./MultipleRooms";
-import ZoomAndModalScene from "./ZoomIn";
+import TreeScene from "./Tree";
+// import Room from "./Room";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     {/* <App /> */}
     {/* <Room /> */}
     {/* <FBX /> */}
-    {/* <TreeScene /> */}
-    {/* <ZoomAndModalScene /> */}
+    {/* <TreeScene/> */}
     {/* <RoomPosition /> */}
     <MultipleRoom />
   </>

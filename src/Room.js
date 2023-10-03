@@ -145,6 +145,23 @@ function Room() {
     var backSchoolWall = frontSchoolWall.clone();
     backSchoolWall.position.z = -roomSize * 4;
 
+    // here is adding the window and door
+    // Create the window geometry and material
+    const windowGeometry = new THREE.BoxGeometry(1, 1, 0.1);
+    const windowMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffff });
+
+    // Create the door geometry and material
+    const doorGeometry = new THREE.BoxGeometry(1, 2, 0.1);
+    const doorMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
+
+    // Create mesh for the window and door
+    const windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
+    const doorMesh = new THREE.Mesh(doorGeometry, doorMaterial);
+
+    // Position the window and door on the front wall
+    windowMesh.position.set(0, 0, -roomSize / 2 + 0.05); // Adjust position as needed
+    doorMesh.position.set(0, -roomSize / 4, -roomSize / 2 + 0.05); // Adjust position as needed
+
     // here is defined the tree
     const trunkGeometry = new THREE.CylinderGeometry(0.1, 0.1, 4, 9);
     const leavesGeometry = new THREE.SphereGeometry(1, 8, 10);
@@ -176,12 +193,13 @@ function Room() {
       leftSchoolWall,
       rightSchoolWall,
       frontSchoolWall,
-      backSchoolWall
+      backSchoolWall,
+      windowMesh,
+      doorMesh
     );
     // Add the groups to the scene
     scene.add(wallsAndRoofGroup);
     scene.add(otherObjectsGroup);
-
     // Create a raycaster and a vector to store mouse coordinates
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
