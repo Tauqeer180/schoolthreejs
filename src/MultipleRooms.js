@@ -6,15 +6,16 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import wallImg from "./assets/wall.jpeg";
 import roofImg from "./assets/roof.jpg";
 import doorImg from "./assets/New.png";
-import grassImg from "./assets/grass.webp";
 import windowImg from "./assets/window.jpg";
-import schoolGate from "./assets/school-gate.png";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Tree from "./components/Tree";
+import BoundryWallPlot from "./components/BoundryWallPlot";
 
 function MultipleRoom() {
   const [showModal, setShowModal] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
+
   const buildingInfo = [
     {
       id: 1,
@@ -61,76 +62,32 @@ function MultipleRoom() {
       .appendChild(renderer.domElement);
     // value of room and thickness
     const roomSize = 4;
-    const wallThickness = 0.01;
+    const wallThickness = 0.1;
     const spacing = 8;
 
-    var walltexture = textureLoader.load(wallImg);
     var roofTexture = textureLoader.load(roofImg);
-    var grassTexture = textureLoader.load(grassImg);
+    var walltexture = textureLoader.load(wallImg);
     const windowTexture = textureLoader.load(windowImg);
     const doorTexture = textureLoader.load(doorImg);
-    const gateTextre = textureLoader.load(schoolGate);
 
     var wallMaterial = new THREE.MeshBasicMaterial({
       map: walltexture,
       side: THREE.DoubleSide,
     });
-    var grassMaterial = new THREE.MeshBasicMaterial({ map: grassTexture });
     const windowMaterial = new THREE.MeshBasicMaterial({ map: windowTexture });
     const doorMaterial = new THREE.MeshBasicMaterial({ map: doorTexture });
-    const gateMaterial = new THREE.MeshBasicMaterial({ map: gateTextre });
 
-    const roofMaterial = new THREE.MeshBasicMaterial({
-      color: 0x00697e,
-      // 0xf6eedc
-      side: THREE.DoubleSide,
-    });
+ 
     const floorMaterial = new THREE.MeshBasicMaterial({ color: "lightgreen" });
 
-    const grassFloorGeometry = new THREE.BoxGeometry(
-      roomSize * 10,
-      wallThickness,
-      roomSize * 15
-    );
-    const grassFloor = new THREE.Mesh(grassFloorGeometry, grassMaterial);
-
-    grassFloor.position.y = -roomSize / 2;
-
-    const leftSchoolWallGeometry = new THREE.BoxGeometry(
-      wallThickness,
-      roomSize,
-      roomSize * 15
-    );
-    var frontSchoolWallGeometry = new THREE.BoxGeometry(
-      roomSize * 10,
-      roomSize,
-      wallThickness
-    );
-    const leftSchoolWall = new THREE.Mesh(leftSchoolWallGeometry, wallMaterial);
-    leftSchoolWall.position.x = -roomSize * 5;
-    const rightSchoolWall = leftSchoolWall.clone();
-    rightSchoolWall.position.x = roomSize * 5;
-    const frontSchoolWall = new THREE.Mesh(
-      frontSchoolWallGeometry,
-      wallMaterial
-    );
-    const gateGeometry = new THREE.BoxGeometry(
-      wallThickness * 2,
-      roomSize * 1,
-      roomSize * 3
-    );
-    frontSchoolWall.position.z = roomSize * 7.5;
-    const backSchoolWall = frontSchoolWall.clone();
-    backSchoolWall.position.z = -roomSize * 7.5;
-    //  Create the window geometry and material
 
     const windowGeometry = new THREE.BoxGeometry(
       roomSize,
       roomSize * 0.5,
-      wallThickness * 5
+      wallThickness * 2
     );
     const doorGeometry = new THREE.BoxGeometry(
-      wallThickness * 5,
+      wallThickness * 2,
       roomSize - 0.5,
       roomSize / 1.5
     );
@@ -150,12 +107,7 @@ function MultipleRoom() {
       createColoredCube(-9.5, 0.65, 20.5, 4, 3, 4, colors),
       createColoredCube(-6, -0.75, 20.5, 4, 3, 4.5, colors),
     ];
-    //  const cubes = [
-    //   createColoredCube(-2, 2, 25, 7, 8, 7, colors),
-    //   createColoredCube(2, 0, 25, 8, 4, 6, colors),
-    //   createColoredCube(-2, 0.65, 20.5, 7, 3, 7, colors),
-    //   createColoredCube(-0.4, -0.75, 20.5, 10, 3, 6, colors),
-    // ];
+  
     cubes.forEach((cube) => scene.add(cube));
     // building
     const raycaster = new THREE.Raycaster();
@@ -215,8 +167,6 @@ function MultipleRoom() {
       const floor = new THREE.Mesh(floorGeometry, floorMaterial);
       floor.position.y = -roomSize / 2;
 
-      const ceiling = new THREE.Mesh(floorGeometry, roofMaterial);
-      ceiling.position.y = roomSize / 2;
 
       // const leftWallGeometry = new THREE.BoxGeometry(
       //   wallThickness,
@@ -273,8 +223,6 @@ function MultipleRoom() {
       rightRoof.position.z = Math.PI / 2.5;
 
       house.add(
-        //floor,
-        // ceiling,
         leftWall,
         rightWall,
         frontWall,
@@ -308,49 +256,28 @@ function MultipleRoom() {
     createHouse(-4, 0, 3); //row 3 house
     // createHouse(2, 17, 4);
     createHouse(2, -20, 5);
-    const trunkGeometry = new THREE.CylinderGeometry(0.1, 0.1, 4, 4);
-    const leavesGeometry = new THREE.SphereGeometry(1, 9, 5);
-//     const trunkGeometry = new THREE.CylinderGeometry(0.1, 0.1, 5, 5); 
-// const leavesGeometry = new THREE.SphereGeometry(1, 9, 15);
 
+    const treeObject1 = Tree();
+    const treeObject2 = Tree();
+    treeObject1.position.set(12, 0, 10);
+    treeObject2.position.set(12, 0, -10);
+    scene.add(treeObject1, treeObject2);
 
-    const trunkMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
-    const leavesMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
-    const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
-leaves.position.y = 10
-    const gateMesh = new THREE.Mesh(gateGeometry, gateMaterial);
-    gateMesh.position.set(20, 0.1, roomSize / 2 - 2);
-
-    // scene.add(trunk);
-    // scene.add(leaves);
-    const otherObjectsGroup = new THREE.Group();
-    otherObjectsGroup.add(
-      grassFloor,
-      leftSchoolWall,
-      rightSchoolWall,
-      frontSchoolWall,
-      backSchoolWall,
-      gateMesh
-    );
     // scene.add(wallsAndRoofGroup);
-    scene.add(otherObjectsGroup);
+
+    // Boundary Wall Plot
+    const BoundryWallGroup = BoundryWallPlot();
+    scene.add(BoundryWallGroup);
+    // Boundry Wall Plot
+
     camera.position.set(20, 20, 0);
+    scene.position.set(-10, 0, 0);
     camera.lookAt(scene.position);
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.update();
 
     const animate = function () {
       requestAnimationFrame(animate);
-
-      trunk.position.x = 10;
-      trunk.position.y = 0.5;
-      trunk.position.z = 0;
-
-      leaves.position.x = 10;
-      leaves.position.y = 0.5;
-      leaves.position.z = 0;
-
       renderer.render(scene, camera);
     };
     animate();
