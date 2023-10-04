@@ -1,156 +1,128 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-export default function TreeScene() {
-  const [showModal, setShowModal] = useState(false);
+const Building = () => {
+  const sceneRef = useRef(null);
 
   useEffect(() => {
-    // const scene = new THREE.Scene();
-    // scene.background = new THREE.Color(0xf6eedc);
-    // const camera = new THREE.PerspectiveCamera(
-    //   75,
-    //   window.innerWidth / window.innerHeight,
-    //   0.1,
-    //   1000
-    // );
-    // const renderer = new THREE.WebGLRenderer();
-    // renderer.setSize(window.innerWidth, window.innerHeight);
-    // document.body.appendChild(renderer.domElement);
-
-    // // here is defined the tree
-    // const trunkGeometry = new THREE.CylinderGeometry(0.1, 0.1, 4, 9);
-    // const leavesGeometry = new THREE.SphereGeometry(1, 8, 10);
-    // // defined the mesbasicmaterial
-    // const trunkMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
-    // const leavesMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    // // Create your tree components (trunk and leaves) here
-    // const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
-    // const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
-    // const tree = new THREE.Group();
-    // tree.add(trunk);
-    // tree.add(leaves);
-
-    // // Set the initial position of your tree
-    // tree.position.set(-4, -0.5, 0);
-
-    // scene.add(tree);
-
-    // // Create a raycaster and an array to store objects for intersection
-    // const raycaster = new THREE.Raycaster();
-    // const clickObjects = [tree];
-    // // Add event listener for mouse clicks
-    // window.addEventListener("click", onClick);
-    // function onClick(event) {
-    //   // Calculate mouse position in normalized device coordinates
-    //   const mouse = new THREE.Vector2();
-    //   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    //   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    //   // Set ray's origin at camera's position
-    //   const rayOrigin = new THREE.Vector3();
-    //   raycaster.setFromCamera(mouse, camera);
-
-    //   // Check for intersections with your tree
-    //   const intersects = raycaster.intersectObjects(clickObjects);
-
-    //   if (intersects.length > 0) {
-    //     // Tree is clicked
-    //     setShowModal(true); // Show the Bootstrap modal
-    //   }
-    // }
-
-    // // Render loop and camera setup
-    // camera.position.z = 5;
-
-    // const animate = () => {
-    //   requestAnimationFrame(animate);
-
-    //   // Add any animations or updates here
-
-    //   renderer.render(scene, camera);
-    // };
-
-    // animate();
-
-    // // Clean up event listener when unmounting
-    // return () => {
-    //   window.removeEventListener("click", onClick);
-    // };
-    let scene = new THREE.Scene();
-    let camera = new THREE.PerspectiveCamera(
+    // Create a scene, camera, and renderer
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xf6eedc);
+    const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
-      1,
+      0.1,
       1000
     );
-    camera.position.z = 10; //Setting camera position for projection of object.
-    let renderer = new THREE.WebGLRenderer(); //To perform 3D rendering in HTML.
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+    // Set the initial camera position
+    camera.position.set(20, 20, 0);
+    const orbit = new OrbitControls(camera, renderer.domElement);
+    orbit.update();
+
+    const colors = [
+      0xFFFFFF, // Red
+      0xFFFFFF, // Green
+      0xb0d9b1, // Blue
+      0xFFFFFF, // Yellow
+      0xFFFFFF, // Magenta
+      0xFFFFFF  // Cyan
+    ];
+    const cubes = [
+      createColoredCube(-2, 2, 0, 7, 8, 7, colors),
+      createColoredCube(2, 0, 0, 8, 4, 6, colors),
+      createColoredCube(-2, 0.65, -4.5, 7, 3, 7, colors),
+      createColoredCube(-0.4, -0.75, -4.5, 10, 3, 6, colors),
+    ];
+
+    // Add cubes to the scene
+    cubes.forEach(cube => scene.add(cube));
+    // const verticalCube = createColoredCube(-2, 2, 0, 7, 8, 5, 0x79ac78);
+    // const horizontalCube = createColoredCube(2, 0, 0, 8, 4, 5, 0xb0d9b1);
+    // const verticalCube1 = createColoredCube(-2, 0.65, -4.5, 7, 3, 4, 0x183d3d);
+    // const horizontalCube1 = createColoredCube(
+    //   -0.4,
+    //   -0.75,
+    //   -4.5,
+    //   10,
+    //   3,
+    //   4,
+    //   0x93b1a6
+    // );
+
+   
+    // scene.add(verticalCube);
+    // scene.add(horizontalCube);
+
+    // scene.add(verticalCube1);
+    // scene.add(horizontalCube1);
+    // Set up the renderer
+
+    // const geometry = new THREE.BoxGeometry(2, 2, 2);
+    // const materials = [
+    //   new THREE.MeshBasicMaterial({ color: 0xff0000 }), // Red
+    //   new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // Green
+    //   new THREE.MeshBasicMaterial({ color: 0x0000ff }), // Blue
+    //   new THREE.MeshBasicMaterial({ color: 0xffff00 }), // Yellow
+    //   new THREE.MeshBasicMaterial({ color: 0xff00ff }), // Magenta
+    //   new THREE.MeshBasicMaterial({ color: 0x00ffff }), // Cyan
+    // ];
+
+    // const cube = new THREE.Mesh(geometry, materials);
+    // scene.add(cube);
+
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement); //To add final scene to DOM
 
-    let houseGroup = new THREE.Group(); //Creating group
-    houseGroup.position.set(-10, 0, -8); // set position of group (x-axis, y-axis, z-axis).
-    // To add bricks for home
-    let geometry = new THREE.BoxGeometry(10, 5, 3); // To draw cube shape geometry.
-    let mesh = new THREE.MeshBasicMaterial({ color: 0x6e638a }); // Add color of cube for appearance of cube.
-    let cube = new THREE.Mesh(geometry, mesh); //With mesh adding appearance of cube over it.
-    let edgeLine = new THREE.BoxBufferGeometry(10, 5, 3);
-    let edges = new THREE.EdgesGeometry(edgeLine); // To have border of cube.
-    let line = new THREE.LineSegments(
-      edges,
-      new THREE.LineBasicMaterial({ color: 0xffffff })
-    ); // Adding border around bricks
-    cube.position.set(0, 0, 4);
-    line.position.copy(cube.position); //Copy of cube position since border need to be added around cube.
-    // Adding line and brick to house group
-    houseGroup.add(line);
-    houseGroup.add(cube);
-    scene.add(houseGroup); //Adding housegroup to scene
+    // Append the renderer to the DOM
+    sceneRef.current.appendChild(renderer.domElement);
 
-    // Note: Need to be added above renderer.render(scene, camera);
-    //To add roof for home
-    let roof = new THREE.ConeGeometry(6, 5, 0);
-    let roofMaterial = new THREE.MeshBasicMaterial({ color: 0xd1d665 });
-    let roofMesh = new THREE.Mesh(roof, roofMaterial);
-    roofMesh.position.set(-1.3, 5, 1);
-    houseGroup.add(roofMesh);
-
-    // Need to be added after code for roof of house.
-    //To add door for home
-    let door = new THREE.PlaneBufferGeometry(2, 3, 2);
-    let doorMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    let doorMesh = new THREE.Mesh(door, doorMaterial);
-    doorMesh.position.set(1, -0.75, 7);
-    houseGroup.add(doorMesh);
-
-    //To change background color of scene from black to blue
-    scene.background = new THREE.Color(0x030124);
+    // Animation function
     const animate = () => {
       requestAnimationFrame(animate);
-
-      // Add any animations or updates here
-
+      // Render the scene
       renderer.render(scene, camera);
     };
 
     animate();
+
+    // Handle window resize
+    const handleResize = () => {
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+
+      camera.aspect = newWidth / newHeight;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(newWidth, newHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Clean up when unmounting
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      sceneRef.current.removeChild(renderer.domElement);
+    };
   }, []);
 
-  return (
-    <div>
-      {/* <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Tree Clicked</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>You clicked on the tree!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
-    </div>
-  );
-}
+  // Function to create a cube
+  // const createColoredCube = (x, y, z, width, height, depth, color) => {
+  //   const geometry = new THREE.BoxGeometry(width, height, depth);
+  //   const material = new THREE.MeshBasicMaterial({ color });
+  //   const cube = new THREE.Mesh(geometry, material);
+  //   cube.position.set(x, y, z);
+  //   return cube;
+  // };
+  const createColoredCube = (x, y, z, width, height, depth, colors) => {
+    const materials = colors.map(color => new THREE.MeshBasicMaterial({ color }));
+    const geometry = new THREE.BoxGeometry(width, height, depth);
+    const cube = new THREE.Mesh(geometry, materials);
+    cube.position.set(x, y, z);
+    return cube;
+  };
+  return <div ref={sceneRef} />;
+};
+
+export default Building;

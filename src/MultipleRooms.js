@@ -7,7 +7,8 @@ import wallImg from "./assets/wall.jpeg";
 import roofImg from "./assets/roof.jpg";
 import doorImg from "./assets/New.png";
 import grassImg from "./assets/grass.webp";
-import windowImg from "./assets/717811f487cf921071eb0068dfa78645.jpg";
+import windowImg from "./assets/window.jpg";
+import schoolGate from "./assets/school-gate.png";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
@@ -68,24 +69,34 @@ function MultipleRoom() {
     var grassTexture = textureLoader.load(grassImg);
     const windowTexture = textureLoader.load(windowImg);
     const doorTexture = textureLoader.load(doorImg);
-    var wallMaterial = new THREE.MeshBasicMaterial({ map: walltexture });
+    const gateTextre = textureLoader.load(schoolGate);
+
+    var wallMaterial = new THREE.MeshBasicMaterial({
+      map: walltexture,
+      side: THREE.DoubleSide,
+    });
     var grassMaterial = new THREE.MeshBasicMaterial({ map: grassTexture });
     const windowMaterial = new THREE.MeshBasicMaterial({ map: windowTexture });
     const doorMaterial = new THREE.MeshBasicMaterial({ map: doorTexture });
+    const gateMaterial = new THREE.MeshBasicMaterial({ map: gateTextre });
 
-    var roofMaterial = new THREE.MeshBasicMaterial({ color: "grey" });
-    var floorMaterial = new THREE.MeshBasicMaterial({ color: "lightgreen" });
+    const roofMaterial = new THREE.MeshBasicMaterial({
+      color: 0x00697e,
+      // 0xf6eedc
+      side: THREE.DoubleSide,
+    });
+    const floorMaterial = new THREE.MeshBasicMaterial({ color: "lightgreen" });
 
-    var grassFloorGeometry = new THREE.BoxGeometry(
+    const grassFloorGeometry = new THREE.BoxGeometry(
       roomSize * 6,
       wallThickness,
       roomSize * 15
     );
-    var grassFloor = new THREE.Mesh(grassFloorGeometry, grassMaterial);
+    const grassFloor = new THREE.Mesh(grassFloorGeometry, grassMaterial);
 
     grassFloor.position.y = -roomSize / 2;
 
-    var leftSchoolWallGeometry = new THREE.BoxGeometry(
+    const leftSchoolWallGeometry = new THREE.BoxGeometry(
       wallThickness,
       roomSize,
       roomSize * 15
@@ -95,24 +106,31 @@ function MultipleRoom() {
       roomSize,
       wallThickness
     );
-    var leftSchoolWall = new THREE.Mesh(leftSchoolWallGeometry, wallMaterial);
+    const leftSchoolWall = new THREE.Mesh(leftSchoolWallGeometry, wallMaterial);
     leftSchoolWall.position.x = -roomSize * 3;
-    var rightSchoolWall = leftSchoolWall.clone();
+    const rightSchoolWall = leftSchoolWall.clone();
     rightSchoolWall.position.x = roomSize * 3;
-    var frontSchoolWall = new THREE.Mesh(frontSchoolWallGeometry, wallMaterial);
+    const frontSchoolWall = new THREE.Mesh(
+      frontSchoolWallGeometry,
+      wallMaterial
+    );
+    const gateGeometry = new THREE.BoxGeometry(
+      wallThickness * 2,
+      roomSize * 1,
+      roomSize * 3
+    );
     frontSchoolWall.position.z = roomSize * 7.5;
-    var backSchoolWall = frontSchoolWall.clone();
+    const backSchoolWall = frontSchoolWall.clone();
     backSchoolWall.position.z = -roomSize * 7.5;
+    //  Create the window geometry and material
 
-    // here is adding the window and door
-    // Create the window geometry and material
     const windowGeometry = new THREE.BoxGeometry(
       roomSize,
       roomSize * 0.5,
-      wallThickness*5
+      wallThickness * 5
     );
     const doorGeometry = new THREE.BoxGeometry(
-      wallThickness*5,
+      wallThickness * 5,
       roomSize - 0.5,
       roomSize / 1.5
     );
@@ -146,18 +164,43 @@ function MultipleRoom() {
         wallThickness,
         roomSize
       );
+
+      // Pentagone
+      const pentaShape = new THREE.Shape();
+      // Starting from bottom-left
+      pentaShape.moveTo(-2, -2); // Bottom left corner
+
+      // Moving to bottom-right
+      pentaShape.lineTo(2, -2); // Bottom right corner
+
+      // Moving up vertically on the right
+      pentaShape.lineTo(2, 2); // Top right of the base
+
+      // Moving to the top-center (roof)
+      pentaShape.lineTo(0, 3.75); // Apex of the roof
+
+      // Moving down vertically on the left
+      pentaShape.lineTo(-2, 2); // Top left of the base
+
+      // Close the pentaShape
+      pentaShape.lineTo(-2, 0); // Bottom left corner
+      // Create a geometry from the shape
+      var pentaGeometry = new THREE.ShapeGeometry(pentaShape);
+      pentaGeometry.rotateY(-Math.PI / 2);
+      // Pentagone
+
       const floor = new THREE.Mesh(floorGeometry, floorMaterial);
       floor.position.y = -roomSize / 2;
 
       const ceiling = new THREE.Mesh(floorGeometry, roofMaterial);
       ceiling.position.y = roomSize / 2;
 
-      const leftWallGeometry = new THREE.BoxGeometry(
-        wallThickness,
-        roomSize,
-        roomSize
-      );
-      const leftWall = new THREE.Mesh(leftWallGeometry, wallMaterial);
+      // const leftWallGeometry = new THREE.BoxGeometry(
+      //   wallThickness,
+      //   roomSize * 2,
+      //   roomSize
+      // );
+      const leftWall = new THREE.Mesh(pentaGeometry, wallMaterial);
       leftWall.position.x = -roomSize;
 
       const rightWall = leftWall.clone();
@@ -172,10 +215,8 @@ function MultipleRoom() {
       frontWall.position.z = -roomSize / 2;
 
       const windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
-      windowMesh.position.z = -roomSize * 0.50;
+      windowMesh.position.z = -roomSize * 0.5;
 
-      // door code
-      // let doorMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
       let doorMesh = new THREE.Mesh(doorGeometry, doorMaterial);
       doorMesh.position.set(4, 0.1, roomSize / 2 - 2);
       const backWall = frontWall.clone();
@@ -209,8 +250,8 @@ function MultipleRoom() {
       rightRoof.position.z = Math.PI / 2.5;
 
       house.add(
-        floor,
-        ceiling,
+        //floor,
+        // ceiling,
         leftWall,
         rightWall,
         frontWall,
@@ -223,13 +264,11 @@ function MultipleRoom() {
       house.position.x = x;
       house.position.z = z;
       scene.add(house);
-
       function onDocumentMouseWheel(event) {
         camera.position.z = 0; // Adjust the factor (0.1) as needed for the zoom speed
         renderer.render(scene, camera);
       }
       document.addEventListener("wheel", onDocumentMouseWheel);
-
       window.addEventListener(
         "click",
         (event) => onMouseClick(event, house, buildingId),
@@ -246,26 +285,26 @@ function MultipleRoom() {
     createHouse(-4, 0, 3); //row 3 house
     createHouse(2, 17, 4);
     createHouse(2, -20, 5);
-
     const trunkGeometry = new THREE.CylinderGeometry(0.1, 0.1, 4, 9);
     const leavesGeometry = new THREE.SphereGeometry(1, 8, 10);
     const trunkMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
     const leavesMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-
     const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
     const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
 
+    const gateMesh = new THREE.Mesh(gateGeometry, gateMaterial);
+    gateMesh.position.set(12, 0.1, roomSize / 2 - 2);
+
     scene.add(trunk);
     scene.add(leaves);
-
     const otherObjectsGroup = new THREE.Group();
-
     otherObjectsGroup.add(
       grassFloor,
       leftSchoolWall,
       rightSchoolWall,
       frontSchoolWall,
-      backSchoolWall
+      backSchoolWall,
+      gateMesh
     );
     // scene.add(wallsAndRoofGroup);
     scene.add(otherObjectsGroup);
@@ -297,7 +336,6 @@ function MultipleRoom() {
     setShowModal(false);
     setSelectedBuilding(null);
   };
-
   return (
     <div className="container-fluid">
       <div className="row h-100">
