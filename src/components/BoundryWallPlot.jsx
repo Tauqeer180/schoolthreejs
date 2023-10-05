@@ -7,8 +7,7 @@ import grassImg from "../assets/grass.webp";
 export default function BoundryWallPlot() {
   const roomSize = 4;
   const wallThickness = 0.1;
-  const spacing = 8;
-
+  
   var textureLoader = new THREE.TextureLoader();
 
   // Gate Code Start

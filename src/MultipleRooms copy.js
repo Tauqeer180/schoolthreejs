@@ -55,7 +55,7 @@ function MultipleRoom() {
       0.1,
       1000
     );
-    var renderer = new THREE.WebGLRenderer();
+    var renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     document
@@ -151,12 +151,12 @@ function MultipleRoom() {
       const floor = new THREE.Mesh(floorGeometry, floorMaterial);
       floor.position.y = -roomSize / 2;
 
-      // const leftWallGeometry = new THREE.BoxGeometry(
-      //   wallThickness,
-      //   roomSize * 2,
-      //   roomSize
-      // );
-      const leftWall = new THREE.Mesh(pentaGeometry, wallMaterial);
+      const leftWallGeometry = new THREE.BoxGeometry(
+        wallThickness*2,
+        roomSize /4,
+        roomSize
+      );
+      const leftWall = new THREE.Mesh(leftWallGeometry, wallMaterial);
       leftWall.position.x = -roomSize;
 
       const rightWall = leftWall.clone();
@@ -164,8 +164,8 @@ function MultipleRoom() {
 
       const frontWallGeometry = new THREE.BoxGeometry(
         roomSize * 2,
-        roomSize,
-        wallThickness
+        roomSize /4,
+        wallThickness *4
       );
       const frontWall = new THREE.Mesh(frontWallGeometry, wallMaterial);
       frontWall.position.z = -roomSize / 2;
@@ -210,10 +210,10 @@ function MultipleRoom() {
         rightWall,
         frontWall,
         backWall,
-        leftRoof,
-        rightRoof,
-        windowMesh,
-        doorMesh
+        // leftRoof,
+        // rightRoof,
+        // windowMesh,
+        // doorMesh
       );
       house.position.x = x;
       house.position.z = z;

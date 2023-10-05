@@ -4,9 +4,7 @@ import "bootstrap/scss/bootstrap.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import Building from "./Tree";
 import MultipleRoom from "./MultipleRooms";
-// import Room from "./Room";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
@@ -15,7 +13,8 @@ root.render(
     {/* <FBX /> */}
     {/* <TreeScene/> */}
     {/* <RoomPosition /> */}
-    <MultipleRoom />
+    <MultipleRoom/>
+    {/* <YourComponent /> */}
     {/* <Building /> */}
     {/* <CubeBuilding /> */}
   </>
