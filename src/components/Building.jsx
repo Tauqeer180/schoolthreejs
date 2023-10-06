@@ -171,9 +171,9 @@ const Building = () => {
   const colorLineMesh1 = colorLineMesh.clone();
    colorLineMesh1.position.set(-13.73, 2, 25);
    colorLineMesh1.rotation.y = -Math.PI / 2;
-  const axesHelper = new THREE.AxesHelper(20);
+  // const axesHelper = new THREE.AxesHelper(20);
   lShapeGroup.add(
-    axesHelper,
+    // axesHelper,
     boundaryMesh,
     boundaryMesh2,
     boundaryMesh1,
