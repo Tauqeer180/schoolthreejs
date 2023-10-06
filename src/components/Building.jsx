@@ -34,9 +34,9 @@ const Building = () => {
   //   { x: -9.5, y: 0.65, z: 20.5, width: 4, height: 3, depth: 4 },
   //   { x: -6, y: -0.75, z: 20.5, width: 4, height: 3, depth: 4.5 },
   const cubeData = [
-    { x: -9, y: 0, z: 25, width: 8.75, height: 8, depth: 4 },
-    { x: -4, y: -2, z: 25, width: 7, height: 5, depth: 4 },
-    { x: -9.5, y: -2, z: 21, width: 8, height: 5, depth: 4 },
+    { x: -9.25, y: 0, z: 25, width: 8.75, height: 8, depth: 6 },
+    { x: -4, y: -2, z: 25, width: 7, height: 5, depth: 5.4 },
+    { x: -9.25, y: -2, z: 22, width: 8, height: 5, depth: 9 },
     // { x: -6, y: -0.75, z: 20.5, width: 4, height: 3, depth: 4.5 },
   ];
 
@@ -82,11 +82,11 @@ const Building = () => {
   const boundaryGeometry1 = new THREE.BoxGeometry(
     wallThickness * 7,
     roomSize / 5,
-    roomSize * 1
+    roomSize * 1.5
   );
   // here is defined the boundary of left and right
   const boundaryGeometry2 = new THREE.BoxGeometry(
-    roomSize * 2.1,
+    roomSize * 2.25,
     roomSize / 4,
     wallThickness * 4
   );
@@ -94,16 +94,38 @@ const Building = () => {
   // def of shades
 
   const shadesGeometry = new THREE.BoxGeometry(
-    roomSize * 1,
-    roomSize /3,
-    wallThickness * 2
+    roomSize,
+    roomSize / 10,
+    wallThickness * 20
+  );
+
+  // def the shades of other building
+  const shadeGeometry = new THREE.BoxGeometry(
+    roomSize / 2,
+    roomSize,
+    wallThickness
+  );
+
+  // defin the color  line
+  const colorGeometry = new THREE.BoxGeometry(roomSize, roomSize, roomSize);
+  const colorGeometry1 = new THREE.BoxGeometry(
+    roomSize * 0.8,
+    roomSize * 0.6,
+    roomSize * 0.8
+  );
+
+  // color lines
+  const colorLineGeometry = new THREE.BoxGeometry(
+    roomSize * 1.5,
+    roomSize / 2.5,
+    wallThickness
   );
 
   const boundaryMaterial = new THREE.MeshBasicMaterial({ color: 0xf1f2f4 });
 
   const boundaryMesh = new THREE.Mesh(boundaryGeometry1, boundaryMaterial);
 
-  boundaryMesh.position.set(-12.99, 4, 25);
+  boundaryMesh.position.set(-13.5, 4, 25);
   const boundaryMesh2 = boundaryMesh.clone();
 
   boundaryMesh2.position.set(-4.75, 4, 25);
@@ -111,28 +133,60 @@ const Building = () => {
   const boundaryMaterial1 = new THREE.MeshBasicMaterial({ color: 0xf1f2f4 });
   const boundaryMesh1 = new THREE.Mesh(boundaryGeometry2, boundaryMaterial1);
 
-  boundaryMesh1.position.set(-8.75, 4, 26.8);
+  boundaryMesh1.position.set(-9, 4, 27.9);
 
   const boundaryMesh3 = boundaryMesh1.clone();
-  boundaryMesh3.position.set(-8.75, 4, 22.99);
+  boundaryMesh3.position.set(-8.95, 4, 22);
 
   // defin the Material of shades
-  const shadesMaterial = new THREE.MeshBasicMaterial({ color: 0x000000});
+  const shadesMaterial = new THREE.MeshBasicMaterial({ color: 0xe3e6e0 });
+  // F2F3F3
   const shadesMesh = new THREE.Mesh(shadesGeometry, shadesMaterial);
-  shadesMesh.position.set(-2.65, -1, 27);
-  // shadesMesh.rotateY((-Math.PI / 90) * 95)
+  shadesMesh.position.set(-2.65, -1, 28);
 
+  // defin the Material of shades 2nd building
+  const shadeMaterial = new THREE.MeshBasicMaterial({ color: 0x23478b });
+  // F2F3F3
+  const shadeMesh = new THREE.Mesh(shadeGeometry, shadeMaterial);
+  shadeMesh.position.set(-14, -1, 20);
 
+  shadeMesh.rotation.x = -Math.PI / 2;
 
+  // defin the color
+  // defin the Material of shades
+  const colorMaterial = new THREE.MeshBasicMaterial({ color: 0xe3e6e0 });
+  const colorMaterial1 = new THREE.MeshBasicMaterial({ color: 0x9fced8 });
+  // F2F3F3
+  const colorMesh = new THREE.Mesh(colorGeometry, colorMaterial);
+  colorMesh.position.set(-12, -3, 26.3);
+  const colorMesh1 = new THREE.Mesh(colorGeometry1, colorMaterial1);
+  colorMesh1.position.set(-12.45, -2.7, 26.75);
+
+  // defin the Material of shades
+  const colorLineMaterial = new THREE.MeshBasicMaterial({ color: 0x9fced8 });
+  // F2F3F3
+  const colorLineMesh = new THREE.Mesh(colorLineGeometry, colorLineMaterial);
+  colorLineMesh.position.set(-8, 1, 28);
+
+  const colorLineMesh1 = colorLineMesh.clone();
+   colorLineMesh1.position.set(-13.73, 2, 25);
+   colorLineMesh1.rotation.y = -Math.PI / 2;
+  const axesHelper = new THREE.AxesHelper(20);
   lShapeGroup.add(
+    axesHelper,
     boundaryMesh,
     boundaryMesh2,
     boundaryMesh1,
     boundaryMesh3,
-    shadesMesh
+    shadesMesh,
+    shadeMesh,
+    colorMesh,
+    colorMesh1,
+    colorLineMesh,
+    colorLineMesh1
   );
 
-  lShapeGroup.position.set(-10, 1, 43);
+  lShapeGroup.position.set(-13, 3, 43);
   lShapeGroup.rotateY((-Math.PI / 90) * 95);
   return lShapeGroup;
 };
