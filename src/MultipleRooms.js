@@ -94,6 +94,7 @@ function MultipleRoom() {
     // cubes building
     const cubeBuilding = Building();
     scene.add(cubeBuilding);
+   
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector3(0, 0, -1).applyQuaternion(
       camera.quaternion
