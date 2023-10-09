@@ -212,6 +212,20 @@ function MultipleRoom() {
       rightRoof.position.y = 2.7;
       rightRoof.position.z = Math.PI / 2.5;
 
+      leftWall.castShadow = true;
+      leftWall.receiveShadow = true;
+      rightWall.castShadow = true;
+      rightWall.receiveShadow = true;
+      frontWall.castShah = true;
+      frontWall.receiveShadow = true;
+      backWall.castShadow = true;
+      backWall.receiveShadow = true;
+      leftRoof.castShadow = true;
+      leftRoof.receiveShadow = true;
+      rightRoof.castShadow = true;
+      rightRoof.receiveShadow = true;
+      windowMesh.castShadow = true;
+      windowMesh.receiveShadow = true;
       house.add(
         leftWall,
         rightWall,
@@ -281,10 +295,10 @@ function MultipleRoom() {
     directionalLight.shadow.mapSize.height = 1024; // default is 512
     directionalLight.shadow.camera.near = 0.1; // default is 0.5
     // directionalLight.shadow.camera.far = 50; // default is 500
-    directionalLight.shadow.camera.left = -15;
-    directionalLight.shadow.camera.right = 15;
-    directionalLight.shadow.camera.top = 15;
-    directionalLight.shadow.camera.bottom = -15;
+    directionalLight.shadow.camera.left = -25;
+    directionalLight.shadow.camera.right = 25;
+    directionalLight.shadow.camera.top = 25;
+    directionalLight.shadow.camera.bottom = -25;
 
     // Optional: Add a helper to visualize the light's position and direction
     var helper = new THREE.DirectionalLightHelper(directionalLight, 10);
