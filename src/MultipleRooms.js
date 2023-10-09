@@ -55,7 +55,9 @@ function MultipleRoom() {
       0.1,
       1000
     );
-    var renderer = new THREE.WebGLRenderer();
+    var renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.shadowMap.enabled = true; // Enable shadow mapping in the renderer
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Use PCF type shadow mapping
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     document
@@ -71,14 +73,18 @@ function MultipleRoom() {
     const windowTexture = textureLoader.load(windowImg);
     const doorTexture = textureLoader.load(doorImg);
 
-    var wallMaterial = new THREE.MeshBasicMaterial({
+    var wallMaterial = new THREE.MeshPhongMaterial({
       map: walltexture,
       side: THREE.DoubleSide,
     });
-    const windowMaterial = new THREE.MeshBasicMaterial({ map: windowTexture });
-    const doorMaterial = new THREE.MeshBasicMaterial({ map: doorTexture });
+    const windowMaterial = new THREE.MeshPhongMaterial({
+      map: windowTexture,
+    });
+    const doorMaterial = new THREE.MeshPhongMaterial({ map: doorTexture });
 
-    const floorMaterial = new THREE.MeshBasicMaterial({ color: "lightgreen" });
+    const floorMaterial = new THREE.MeshPhongMaterial({
+      color: "lightgreen",
+    });
 
     const windowGeometry = new THREE.BoxGeometry(
       roomSize,
@@ -94,7 +100,7 @@ function MultipleRoom() {
     // cubes building
     const cubeBuilding = Building();
     scene.add(cubeBuilding);
-   
+
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector3(0, 0, -1).applyQuaternion(
       camera.quaternion
@@ -186,7 +192,7 @@ function MultipleRoom() {
 
       const leftRoof = new THREE.Mesh(
         roofGeometry,
-        new THREE.MeshBasicMaterial({
+        new THREE.MeshPhongMaterial({
           map: roofTexture,
           side: THREE.DoubleSide,
         })
@@ -197,7 +203,7 @@ function MultipleRoom() {
 
       const rightRoof = new THREE.Mesh(
         roofGeometry,
-        new THREE.MeshBasicMaterial({
+        new THREE.MeshPhongMaterial({
           map: roofTexture,
           side: THREE.DoubleSide,
         })
@@ -218,6 +224,8 @@ function MultipleRoom() {
       );
       house.position.x = x;
       house.position.z = z;
+      house.castShadow = true; // Enable the house to cast shadows
+      house.receiveShadow = true; // Enable the house to receive shadows
       scene.add(house);
       function onDocumentMouseWheel(event) {
         camera.position.z = 0; // Adjust the factor (0.1) as needed for the zoom speed
@@ -244,6 +252,12 @@ function MultipleRoom() {
     // Tree Object
     const treeObject1 = Tree();
     const treeObject2 = Tree();
+
+    treeObject1.castShadow = true; // Enable the treeObject1 to cast shadows
+    treeObject1.receiveShadow = true; // Enable the treeObject1 to receive shadows
+    treeObject2.castShadow = true; // Enable the treeObject1 to cast shadows
+    treeObject2.receiveShadow = true; // Enable the treeObject1 to receive shadows
+
     treeObject1.position.set(12, 0, 10);
     treeObject2.position.set(12, 0, -10);
     scene.add(treeObject1, treeObject2);
@@ -252,8 +266,29 @@ function MultipleRoom() {
 
     // Boundary Wall Plot
     const BoundryWallGroup = BoundryWallPlot();
+    BoundryWallGroup.receiveShadow = true;
     scene.add(BoundryWallGroup);
     // Boundry Wall Plot
+    scene.add(new THREE.AmbientLight(0xf1f2f3, 0.7));
+
+    var directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Color, Intensity
+    directionalLight.position.set(-22, 30, 30); // Set position of the light
+    directionalLight.castShadow = true; // Enable the light to cast shadows
+    scene.add(directionalLight);
+
+    // Set up the shadow properties for the light
+    directionalLight.shadow.mapSize.width = 1024; // default is 512
+    directionalLight.shadow.mapSize.height = 1024; // default is 512
+    directionalLight.shadow.camera.near = 0.1; // default is 0.5
+    // directionalLight.shadow.camera.far = 50; // default is 500
+    directionalLight.shadow.camera.left = -15;
+    directionalLight.shadow.camera.right = 15;
+    directionalLight.shadow.camera.top = 15;
+    directionalLight.shadow.camera.bottom = -15;
+
+    // Optional: Add a helper to visualize the light's position and direction
+    var helper = new THREE.DirectionalLightHelper(directionalLight, 10);
+    scene.add(helper);
 
     camera.position.set(20, 20, 0);
     scene.position.set(-10, 0, 0);

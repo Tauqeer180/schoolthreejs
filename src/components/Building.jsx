@@ -42,24 +42,24 @@ const Building = () => {
 
   cubeData.forEach((data, index) => {
     const materials = [
-      new THREE.MeshBasicMaterial({
+      new THREE.MeshPhysicalMaterial({
         map: textures[index],
         side: THREE.DoubleSide,
         transparent: true,
       }),
-      new THREE.MeshBasicMaterial({
+      new THREE.MeshPhysicalMaterial({
         map: textures[index],
         side: THREE.DoubleSide,
         transparent: true,
       }),
-      new THREE.MeshBasicMaterial({ color: colors[index] }),
-      new THREE.MeshBasicMaterial({}),
-      new THREE.MeshBasicMaterial({
+      new THREE.MeshPhysicalMaterial({ color: colors[index] }),
+      new THREE.MeshPhysicalMaterial({}),
+      new THREE.MeshPhysicalMaterial({
         map: textures[index],
         side: THREE.DoubleSide,
         transparent: true,
       }), // left side
-      new THREE.MeshBasicMaterial({
+      new THREE.MeshPhysicalMaterial({
         map: textures[index],
         side: THREE.DoubleSide,
         transparent: true,
@@ -75,6 +75,10 @@ const Building = () => {
       data.depth,
       materials
     );
+
+    cube.castShadow = true;
+    cube.receiveShadow = true;
+
     lShapeGroup.add(cube);
   });
 
@@ -121,7 +125,7 @@ const Building = () => {
     wallThickness
   );
 
-  const boundaryMaterial = new THREE.MeshBasicMaterial({ color: 0xf1f2f4 });
+  const boundaryMaterial = new THREE.MeshPhysicalMaterial({ color: 0xf1f2f4 });
 
   const boundaryMesh = new THREE.Mesh(boundaryGeometry1, boundaryMaterial);
 
@@ -130,7 +134,7 @@ const Building = () => {
 
   boundaryMesh2.position.set(-4.75, 4, 25);
 
-  const boundaryMaterial1 = new THREE.MeshBasicMaterial({ color: 0xf1f2f4 });
+  const boundaryMaterial1 = new THREE.MeshPhysicalMaterial({ color: 0xf1f2f4 });
   const boundaryMesh1 = new THREE.Mesh(boundaryGeometry2, boundaryMaterial1);
 
   boundaryMesh1.position.set(-9, 4, 27.9);
@@ -139,13 +143,13 @@ const Building = () => {
   boundaryMesh3.position.set(-8.95, 4, 22);
 
   // defin the Material of shades
-  const shadesMaterial = new THREE.MeshBasicMaterial({ color: 0xe3e6e0 });
+  const shadesMaterial = new THREE.MeshPhysicalMaterial({ color: 0xe3e6e0 });
   // F2F3F3
   const shadesMesh = new THREE.Mesh(shadesGeometry, shadesMaterial);
   shadesMesh.position.set(-2.65, -1, 28);
 
   // defin the Material of shades 2nd building
-  const shadeMaterial = new THREE.MeshBasicMaterial({ color: 0x23478b });
+  const shadeMaterial = new THREE.MeshPhysicalMaterial({ color: 0x23478b });
   // F2F3F3
   const shadeMesh = new THREE.Mesh(shadeGeometry, shadeMaterial);
   shadeMesh.position.set(-14, -1, 20);
@@ -154,24 +158,61 @@ const Building = () => {
 
   // defin the color
   // defin the Material of shades
-  const colorMaterial = new THREE.MeshBasicMaterial({ color: 0xe3e6e0 });
-  const colorMaterial1 = new THREE.MeshBasicMaterial({ color: 0x9fced8 });
+  const colorMaterial = new THREE.MeshPhysicalMaterial({ color: 0xe3e6e0 });
+  const colorMaterial1 = new THREE.MeshPhysicalMaterial({ color: 0x9fced8 });
   // F2F3F3
   const colorMesh = new THREE.Mesh(colorGeometry, colorMaterial);
   colorMesh.position.set(-12, -3, 26.3);
   const colorMesh1 = new THREE.Mesh(colorGeometry1, colorMaterial1);
+  colorMesh.castShadow = true;
+  colorMesh.receiveShadow = true;
   colorMesh1.position.set(-12.45, -2.7, 26.75);
-
+  colorMesh1.castShadow = true;
+  colorMesh1.receiveShadow = true;
   // defin the Material of shades
-  const colorLineMaterial = new THREE.MeshBasicMaterial({ color: 0x9fced8 });
+  const colorLineMaterial = new THREE.MeshPhysicalMaterial({ color: 0x9fced8 });
   // F2F3F3
   const colorLineMesh = new THREE.Mesh(colorLineGeometry, colorLineMaterial);
   colorLineMesh.position.set(-8, 1, 28);
 
+  colorLineMesh.castShadow = true;
+  colorLineMesh.receiveShadow = true;
   const colorLineMesh1 = colorLineMesh.clone();
-   colorLineMesh1.position.set(-13.73, 2, 25);
-   colorLineMesh1.rotation.y = -Math.PI / 2;
+  colorLineMesh1.position.set(-13.73, 2, 25);
+  colorLineMesh1.rotation.y = -Math.PI / 2;
+  colorLineMesh1.castShadow = true;
+  colorLineMesh1.receiveShadow = true;
   // const axesHelper = new THREE.AxesHelper(20);
+
+  boundaryMesh.castShadow = true;
+  boundaryMesh.receiveShadow = true;
+
+  boundaryMesh2.castShadow = true;
+  boundaryMesh2.receiveShadow = true;
+
+  boundaryMesh1.castShadow = true;
+  boundaryMesh1.receiveShadow = true;
+
+  boundaryMesh3.castShadow = true;
+  boundaryMesh3.receiveShadow = true;
+
+  shadeMesh.castShadow = true;
+  shadeMesh.receiveShadow = true;
+  shadesMesh.castShadow = true;
+  shadesMesh.receiveShadow = true;
+
+  colorMesh.castShadow = true;
+  colorMesh.receiveShadow = true;
+
+  colorMesh1.castShadow = true;
+  colorMesh1.receiveShadow = true;
+
+  colorLineMesh.castShadow = true;
+  colorLineMesh.receiveShadow = true;
+
+  colorLineMesh1.castShadow = true;
+  colorLineMesh1.receiveShadow = true;
+
   lShapeGroup.add(
     // axesHelper,
     boundaryMesh,
@@ -188,6 +229,8 @@ const Building = () => {
 
   lShapeGroup.position.set(-13, 3, 43);
   lShapeGroup.rotateY((-Math.PI / 90) * 95);
+  lShapeGroup.castShadow = true;
+  lShapeGroup.receiveShadow = true;
   return lShapeGroup;
 };
 

@@ -7,21 +7,20 @@ import grassImg from "../assets/grass.webp";
 export default function BoundryWallPlot() {
   const roomSize = 4;
   const wallThickness = 0.1;
-  
+
   var textureLoader = new THREE.TextureLoader();
 
   // Gate Code Start
   const gateTextre = textureLoader.load(schoolGate);
-  const gateMaterial = new THREE.MeshBasicMaterial({ map: gateTextre });
+  const gateMaterial = new THREE.MeshLambertMaterial({ map: gateTextre });
   var walltexture = textureLoader.load(wallImg);
   var grassTexture = textureLoader.load(grassImg);
 
-  var wallMaterial = new THREE.MeshBasicMaterial({
+  var wallMaterial = new THREE.MeshLambertMaterial({
     map: walltexture,
     side: THREE.DoubleSide,
   });
-  var grassMaterial = new THREE.MeshBasicMaterial({ map: grassTexture });
-
+  var grassMaterial = new THREE.MeshLambertMaterial({ map: grassTexture });
   const gateGeometry = new THREE.BoxGeometry(
     wallThickness * 10,
     roomSize * 1,
@@ -38,7 +37,7 @@ export default function BoundryWallPlot() {
     roomSize * 15
   );
   const grassFloor = new THREE.Mesh(grassFloorGeometry, grassMaterial);
-
+  grassFloor.receiveShadow = true;
   grassFloor.position.y = -roomSize / 2;
 
   const leftSchoolWallGeometry = new THREE.BoxGeometry(
