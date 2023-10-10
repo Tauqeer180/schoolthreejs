@@ -330,8 +330,8 @@ function MultipleRoom() {
     directionalLight.shadow.camera.bottom = -45;
 
     // Optional: Add a helper to visualize the light's position and direction
-    var helper = new THREE.DirectionalLightHelper(directionalLight, 10);
-    scene.add(helper);
+    // var helper = new THREE.DirectionalLightHelper(directionalLight, 10);
+    // scene.add(helper);
 
     camera.position.set(20, 20, 0);
     scene.position.set(-10, 0, 0);
@@ -339,7 +339,7 @@ function MultipleRoom() {
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.maxDistance = 100;
     orbit.minDistance = 10;
-    // orbit.maxPolarAngle = Math.PI / 2
+    orbit.maxPolarAngle = Math.PI / 2
     orbit.update();
 
     const animate = function () {
