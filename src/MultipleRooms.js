@@ -9,9 +9,10 @@ import doorImg from "./assets/New.png";
 import windowImg from "./assets/window.jpg";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import Tree from "./components/Tree";
 import BoundryWallPlot from "./components/BoundryWallPlot";
 import Building from "./components/Building";
+import Floor from "./components/Floor";
+import { CloneMultipleTree, CloneTree, Tree } from "./components/Tree";
 
 function MultipleRoom() {
   const [showModal, setShowModal] = useState(false);
@@ -100,6 +101,10 @@ function MultipleRoom() {
     // cubes building
     const cubeBuilding = Building();
     scene.add(cubeBuilding);
+
+    //Define floor
+    const floorBuilding = Floor();
+    scene.add(floorBuilding);
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector3(0, 0, -1).applyQuaternion(
@@ -266,15 +271,39 @@ function MultipleRoom() {
     // Tree Object
     const treeObject1 = Tree();
     const treeObject2 = Tree();
+    const treeObject3 = Tree();
+    // cone shape tree
+    const coneTree = CloneTree();
+    const coneTree1 = CloneTree();
+    const coneTree2 = CloneTree();
+    const coneTree3 = CloneTree();
 
-    treeObject1.castShadow = true; // Enable the treeObject1 to cast shadows
-    treeObject1.receiveShadow = true; // Enable the treeObject1 to receive shadows
-    treeObject2.castShadow = true; // Enable the treeObject1 to cast shadows
-    treeObject2.receiveShadow = true; // Enable the treeObject1 to receive shadows
+    const CloneMultiple = CloneMultipleTree();
+    const CloneMultiple1 = CloneMultipleTree();
+    const CloneMultiple2 = CloneMultipleTree();
+    const CloneMultiple3 = CloneMultipleTree();
 
-    treeObject1.position.set(12, 0, 10);
+
+
+    // treeObject1.castShadow = true; // Enable the treeObject1 to cast shadows
+    // treeObject1.receiveShadow = true; // Enable the treeObject1 to receive shadows
+    // treeObject2.castShadow = true; // Enable the treeObject1 to cast shadows
+    // treeObject2.receiveShadow = true; // Enable the treeObject1 to receive shadows
+
+    treeObject1.position.set(-20, 0, -30);
     treeObject2.position.set(12, 0, -10);
-    scene.add(treeObject1, treeObject2);
+    treeObject3.position.set(10, 0, 30);
+
+    coneTree.position.set(-20, 8, -15);
+    coneTree1.position.set(-28, 8, 0);
+  coneTree2.position.set(20, 8, 35);
+    coneTree3.position.set(-20, 8, 30);
+
+    CloneMultiple.position.set(10, 0, 35);
+    CloneMultiple1.position.set(-15, 0, 35);
+    CloneMultiple2.position.set(-22, 0, 10);
+    CloneMultiple3.position.set(22, 0, 45);
+    scene.add(treeObject1, treeObject2,treeObject3, coneTree, coneTree1 ,coneTree2 , coneTree3,CloneMultiple , CloneMultiple1 , CloneMultiple2 ,CloneMultiple3 );
 
     // scene.add(wallsAndRoofGroup);
 
@@ -295,10 +324,10 @@ function MultipleRoom() {
     directionalLight.shadow.mapSize.height = 1024; // default is 512
     directionalLight.shadow.camera.near = 0.1; // default is 0.5
     // directionalLight.shadow.camera.far = 50; // default is 500
-    directionalLight.shadow.camera.left = -25;
-    directionalLight.shadow.camera.right = 25;
-    directionalLight.shadow.camera.top = 25;
-    directionalLight.shadow.camera.bottom = -25;
+    directionalLight.shadow.camera.left = -45;
+    directionalLight.shadow.camera.right = 45;
+    directionalLight.shadow.camera.top = 45;
+    directionalLight.shadow.camera.bottom = -45;
 
     // Optional: Add a helper to visualize the light's position and direction
     var helper = new THREE.DirectionalLightHelper(directionalLight, 10);
@@ -308,6 +337,9 @@ function MultipleRoom() {
     scene.position.set(-10, 0, 0);
     camera.lookAt(scene.position);
     const orbit = new OrbitControls(camera, renderer.domElement);
+    orbit.maxDistance = 100;
+    orbit.minDistance = 10;
+    // orbit.maxPolarAngle = Math.PI / 2
     orbit.update();
 
     const animate = function () {

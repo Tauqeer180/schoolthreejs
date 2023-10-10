@@ -27,14 +27,14 @@ export default function BoundryWallPlot() {
     roomSize * 3
   );
   const gateMesh = new THREE.Mesh(gateGeometry, gateMaterial);
-  gateMesh.position.set(20, 0.1, roomSize / 2 - 2);
+  gateMesh.position.set(36, 0.1, roomSize / 2 - 2);
 
   // Gate Code End Here
 
   const grassFloorGeometry = new THREE.BoxGeometry(
-    roomSize * 10,
+    roomSize * 18,
     wallThickness,
-    roomSize * 15
+    roomSize * 25
   );
   const grassFloor = new THREE.Mesh(grassFloorGeometry, grassMaterial);
   grassFloor.receiveShadow = true;
@@ -43,21 +43,21 @@ export default function BoundryWallPlot() {
   const leftSchoolWallGeometry = new THREE.BoxGeometry(
     wallThickness * 5,
     roomSize,
-    roomSize * 15
+    roomSize * 24.85
   );
   var frontSchoolWallGeometry = new THREE.BoxGeometry(
-    roomSize * 10,
+    roomSize * 18,
     roomSize,
     wallThickness
   );
   const leftSchoolWall = new THREE.Mesh(leftSchoolWallGeometry, wallMaterial);
-  leftSchoolWall.position.x = -roomSize * 5;
+  leftSchoolWall.position.x = -roomSize * 9;
   const rightSchoolWall = leftSchoolWall.clone();
-  rightSchoolWall.position.x = roomSize * 5;
+  rightSchoolWall.position.x = roomSize * 9;
   const frontSchoolWall = new THREE.Mesh(frontSchoolWallGeometry, wallMaterial);
-  frontSchoolWall.position.z = roomSize * 7.5;
+  frontSchoolWall.position.z = roomSize * 12.45;
   const backSchoolWall = frontSchoolWall.clone();
-  backSchoolWall.position.z = -roomSize * 7.5;
+  backSchoolWall.position.z = -roomSize * 12.45;
 
   const wallGroup = new THREE.Group();
   wallGroup.add(

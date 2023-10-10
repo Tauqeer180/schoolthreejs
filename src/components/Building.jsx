@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import whiteWall from "../assets/white.jpeg";
+import Floor from "./Floor";
 const Building = () => {
   const colors = [0xb0d9b1, 0xb0d9b1, 0xb0d9b1];
   const roomSize = 4;
@@ -28,18 +29,12 @@ const Building = () => {
     textureRight,
     textureTop,
   ];
-
-  // { x: -9, y: 0, z: 25, width: 7, height: 4, depth: 4 },
-  //   { x: -4, y: 0, z: 25, width: 4, height: 3, depth: 4 },
-  //   { x: -9.5, y: 0.65, z: 20.5, width: 4, height: 3, depth: 4 },
-  //   { x: -6, y: -0.75, z: 20.5, width: 4, height: 3, depth: 4.5 },
   const cubeData = [
     { x: -9.25, y: 0, z: 25, width: 8.75, height: 8, depth: 6 },
     { x: -4, y: -2, z: 25, width: 7, height: 5, depth: 5.4 },
     { x: -9.25, y: -2, z: 22, width: 8, height: 5, depth: 9 },
     // { x: -6, y: -0.75, z: 20.5, width: 4, height: 3, depth: 4.5 },
   ];
-
   cubeData.forEach((data, index) => {
     const materials = [
       new THREE.MeshPhysicalMaterial({
@@ -95,8 +90,7 @@ const Building = () => {
     wallThickness * 4
   );
 
-  // def of shades
-
+  // def of shade
   const shadesGeometry = new THREE.BoxGeometry(
     roomSize,
     roomSize / 10,
@@ -184,6 +178,8 @@ const Building = () => {
   colorLineMesh1.receiveShadow = true;
   // const axesHelper = new THREE.AxesHelper(20);
 
+  
+
   boundaryMesh.castShadow = true;
   boundaryMesh.receiveShadow = true;
 
@@ -212,7 +208,9 @@ const Building = () => {
 
   colorLineMesh1.castShadow = true;
   colorLineMesh1.receiveShadow = true;
-
+ //Define floor 
+//  const floorBuilding = Floor();
+//  scene.add(floorBuilding);
   lShapeGroup.add(
     // axesHelper,
     boundaryMesh,
@@ -224,7 +222,7 @@ const Building = () => {
     colorMesh,
     colorMesh1,
     colorLineMesh,
-    colorLineMesh1
+    colorLineMesh1,
   );
 
   lShapeGroup.position.set(-13, 3, 43);
