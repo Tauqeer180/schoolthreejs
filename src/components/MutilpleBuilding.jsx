@@ -9,11 +9,11 @@ function CreateHouse(
   z,
   buildingId,
   setSelectedBuilding,
-  selectedBuilding,
+  
   setShowModal,
   camera,
   scene,renderer
-  // CloseModal
+ 
 ) {
   const roomSize = 4;
   var textureLoader = new THREE.TextureLoader();
