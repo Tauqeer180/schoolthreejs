@@ -16,7 +16,7 @@ function CreateHouse(
   // CloseModal
 ) {
   const roomSize = 4;
-  var textureLoader = new THREE.TextureLoader();
+  const textureLoader = new THREE.TextureLoader();
   const wallThickness = 0.1;
   const roofTexture = textureLoader.load(roofImg);
   const walltexture = textureLoader.load(wallImg);
@@ -91,7 +91,7 @@ function CreateHouse(
   // Close the pentaShape
   pentaShape.lineTo(-2, 0); // Bottom left corner
   // Create a geometry from the shape
-  var pentaGeometry = new THREE.ShapeGeometry(pentaShape);
+  const pentaGeometry = new THREE.ShapeGeometry(pentaShape);
   pentaGeometry.rotateY(-Math.PI / 2);
   // Pentagone
 

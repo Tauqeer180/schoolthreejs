@@ -10,8 +10,9 @@ import Building from "./components/Building";
 import Floor from "./components/Floor";
 import { CloneMultipleTree, CloneTree, Tree } from "./components/Tree";
 import CreateHouse from "./components/MutilpleBuilding";
+import Road from "./components/Road";
 
-function MultipleRoom() {
+function App() {
   const [showModal, setShowModal] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
 
@@ -52,7 +53,7 @@ function MultipleRoom() {
       0.1,
       1000
     );
-    var renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.shadowMap.enabled = true; // Enable shadow mapping in the renderer
     renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Use PCF type shadow mapping
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -71,7 +72,11 @@ function MultipleRoom() {
     const floorBuilding = Floor();
     scene.add(floorBuilding);
 
-    
+    // defin the roadPath
+    const roadPath = Road();
+    roadPath.position.set(10, -1.75, 4);
+
+    scene.add(roadPath);
     function onDocumentMouseWheel(event) {
       camera.position.z = 0; // Adjust the factor (0.1) as needed for the zoom speed
       renderer.render(scene, camera);
@@ -172,7 +177,7 @@ function MultipleRoom() {
     // Boundry Wall Plot
     scene.add(new THREE.AmbientLight(0xf1f2f3, 0.7));
 
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Color, Intensity
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Color, Intensity
     directionalLight.position.set(-22, 30, 30); // Set position of the light
     directionalLight.castShadow = true; // Enable the light to cast shadows
     scene.add(directionalLight);
@@ -197,7 +202,7 @@ function MultipleRoom() {
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.maxDistance = 100;
     orbit.minDistance = 10;
-    orbit.maxPolarAngle = Math.PI / 2;
+    // orbit.maxPolarAngle = Math.PI / 2;
     orbit.update();
 
     const animate = function () {
@@ -205,10 +210,6 @@ function MultipleRoom() {
       renderer.render(scene, camera);
     };
     animate();
-
-    // return () => {
-    //   window.removeEventListener("click", onMouseClick);
-    // };
   }, []);
   const closeModal = () => {
     setShowModal(false);
@@ -250,4 +251,4 @@ function MultipleRoom() {
   );
 }
 
-export default MultipleRoom;
+export default App;

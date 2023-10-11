@@ -77,8 +77,8 @@ export function CloneMultipleTree() {
     numPoints,
     innerFactor
   );
-  var textureLoader = new THREE.TextureLoader();
-  var grassTexture = textureLoader.load(grassImg);
+  const textureLoader = new THREE.TextureLoader();
+  const grassTexture = textureLoader.load(grassImg);
 
   const material = new THREE.MeshBasicMaterial({
     color: 0x4caf50,
