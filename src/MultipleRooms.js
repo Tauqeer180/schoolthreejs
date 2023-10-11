@@ -188,7 +188,7 @@ function MultipleRoom() {
     directionalLight.shadow.camera.bottom = -45;
 
     // Optional: Add a helper to visualize the light's position and direction
-    // var helper = new THREE.DirectionalLightHelper(directionalLight, 10);
+    var helper = new THREE.DirectionalLightHelper(directionalLight, 10);
     // scene.add(helper);
 
     camera.position.set(20, 20, 0);
