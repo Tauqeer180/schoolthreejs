@@ -1,5 +1,5 @@
 import * as THREE from "three";
-
+import grassImg from '../assets/grass.webp'
 export function Tree() {
   const trunkGeometry = new THREE.CylinderGeometry(0.5, 0.1, 5, 5);
   const leavesGeometry = new THREE.SphereGeometry(2, 20, 50);
@@ -69,7 +69,7 @@ export function CloneMultipleTree() {
   const numPoints = 5; // Number of outward points of the star
   const innerFactor = 0.3; // How much inward the inner points should be, between 0 and 1
   const trunkGeometry = new THREE.CylinderGeometry(0.5, 0.5, 4, 4);
-  const trunkMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
+  const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8b4513 });
   const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
   const starConeGeometry = createStarCone(
     radius,
@@ -77,11 +77,15 @@ export function CloneMultipleTree() {
     numPoints,
     innerFactor
   );
+  var textureLoader = new THREE.TextureLoader();
+  var grassTexture = textureLoader.load(grassImg);
+
   const material = new THREE.MeshBasicMaterial({
     color: 0x4caf50,
+    // map: grassTexture,
     side: THREE.DoubleSide,
   });
-  const starCone = new THREE.Mesh(starConeGeometry, material, trunk);
+  const starCone = new THREE.Mesh(starConeGeometry, material);
   const starCone1 = starCone.clone();
   const starCone2 = starCone.clone();
   trunk.castShadow = true;

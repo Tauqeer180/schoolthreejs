@@ -13,8 +13,8 @@ export default function BoundryWallPlot() {
   // Gate Code Start
   const gateTextre = textureLoader.load(schoolGate);
   const gateMaterial = new THREE.MeshLambertMaterial({ map: gateTextre });
-  var walltexture = textureLoader.load(wallImg);
-  var grassTexture = textureLoader.load(grassImg);
+  const walltexture = textureLoader.load(wallImg);
+  const grassTexture = textureLoader.load(grassImg);
 
   var wallMaterial = new THREE.MeshLambertMaterial({
     map: walltexture,
@@ -28,6 +28,10 @@ export default function BoundryWallPlot() {
   );
   const gateMesh = new THREE.Mesh(gateGeometry, gateMaterial);
   gateMesh.position.set(36, 0.1, roomSize / 2 - 2);
+  // repeat texture
+  grassTexture.wrapS = THREE.RepeatWrapping;
+  grassTexture.wrapT = THREE.RepeatWrapping;
+  grassTexture.repeat.set(roomSize * 2, roomSize * 2.7);
 
   // Gate Code End Here
 
