@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import grassImg from '../assets/grass.webp'
+import grassImg from "../assets/grass.webp";
 export function Tree() {
   const trunkGeometry = new THREE.CylinderGeometry(0.5, 0.1, 5, 5);
   const leavesGeometry = new THREE.SphereGeometry(2, 20, 50);
@@ -24,13 +24,23 @@ export function Tree() {
 
 export function CloneTree() {
   // here is cone shape defined
-  const geometry = new THREE.ConeGeometry(5, 20, 10);
+  const trunkGeometry = new THREE.CylinderGeometry(0.5, 1, 14, 4);
+  const trunkMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
+
+  const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+  trunk.position.set(0, -5, 0);
+  const geometry = new THREE.ConeGeometry(5, 10, 5);
   const material = new THREE.MeshBasicMaterial({ color: 0x455538 });
   const cone = new THREE.Mesh(geometry, material);
   cone.castShadow = true;
+  trunk.castShadow = true;
+
   cone.receiveShadow = true;
+  trunk.receiveShadow = true;
+  cone.position.set(0, 0, 0);
+
   const coneObject = new THREE.Group();
-  coneObject.add(cone);
+  coneObject.add(trunk, cone);
   return coneObject;
 }
 
@@ -82,7 +92,6 @@ export function CloneMultipleTree() {
 
   const material = new THREE.MeshBasicMaterial({
     color: 0x4caf50,
-    // map: grassTexture,
     side: THREE.DoubleSide,
   });
   const starCone = new THREE.Mesh(starConeGeometry, material);

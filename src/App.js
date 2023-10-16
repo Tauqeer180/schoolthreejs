@@ -138,11 +138,13 @@ function App() {
     const coneTree1 = CloneTree();
     const coneTree2 = CloneTree();
     const coneTree3 = CloneTree();
+    const coneTree4 = CloneTree();
 
     const CloneMultiple = CloneMultipleTree();
     const CloneMultiple1 = CloneMultipleTree();
     const CloneMultiple2 = CloneMultipleTree();
     const CloneMultiple3 = CloneMultipleTree();
+    const CloneMultiple4 = CloneMultipleTree();
 
     treeObject1.position.set(-20, 0, -30);
     treeObject2.position.set(12, 0, -10);
@@ -152,11 +154,13 @@ function App() {
     coneTree1.position.set(-28, 8, 0);
     coneTree2.position.set(20, 8, 35);
     coneTree3.position.set(-20, 8, 30);
+    coneTree4.position.set(15, 8, -25);
 
     CloneMultiple.position.set(10, 0, 35);
     CloneMultiple1.position.set(-15, 0, 35);
     CloneMultiple2.position.set(-22, 0, 10);
     CloneMultiple3.position.set(22, 0, 45);
+    CloneMultiple4.position.set(22, 0, -20);
     scene.add(
       treeObject1,
       treeObject2,
@@ -165,10 +169,12 @@ function App() {
       coneTree1,
       coneTree2,
       coneTree3,
+      coneTree4,
       CloneMultiple,
       CloneMultiple1,
       CloneMultiple2,
-      CloneMultiple3
+      CloneMultiple3,
+      CloneMultiple4
     );
     // Boundary Wall Plot
     const BoundryWallGroup = BoundryWallPlot();
@@ -202,7 +208,7 @@ function App() {
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.maxDistance = 100;
     orbit.minDistance = 10;
-    // orbit.maxPolarAngle = Math.PI / 2;
+    orbit.maxPolarAngle = Math.PI / 2;
     orbit.update();
 
     const animate = function () {
