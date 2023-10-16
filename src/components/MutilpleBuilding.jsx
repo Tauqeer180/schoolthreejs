@@ -159,8 +159,10 @@ function CreateHouse(
   rightRoof.receiveShadow = true;
   windowMesh.castShadow = true;
   windowMesh.receiveShadow = true;
-  // const roofArea = Roof();
-
+  const roofArea = Roof();
+ const newRoof =  buildingId ===5 ? roofArea:null
+ 
+  // const axesHelper = new THREE.AxesHelper( 20);
   house.add(
     leftWall,
     rightWall,
@@ -170,7 +172,9 @@ function CreateHouse(
     rightRoof,
     windowMesh,
     doorMesh,
-    // roofArea
+    newRoof
+    // roofArea,
+    // axesHelper
   );
   house.position.x = x;
   house.position.z = z;
