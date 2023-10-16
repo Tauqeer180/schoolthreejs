@@ -3,6 +3,7 @@ import wallImg from "../assets/wall.jpeg";
 import roofImg from "../assets/roof.jpg";
 import doorImg from "../assets/New.png";
 import windowImg from "../assets/window.jpg";
+import Roof from "./Roof";
 
 function CreateHouse(
   x,
@@ -12,7 +13,8 @@ function CreateHouse(
   selectedBuilding,
   setShowModal,
   camera,
-  scene,renderer
+  scene,
+  renderer
   // CloseModal
 ) {
   const roomSize = 4;
@@ -157,6 +159,8 @@ function CreateHouse(
   rightRoof.receiveShadow = true;
   windowMesh.castShadow = true;
   windowMesh.receiveShadow = true;
+  // const roofArea = Roof();
+
   house.add(
     leftWall,
     rightWall,
@@ -165,7 +169,8 @@ function CreateHouse(
     leftRoof,
     rightRoof,
     windowMesh,
-    doorMesh
+    doorMesh,
+    // roofArea
   );
   house.position.x = x;
   house.position.z = z;
@@ -182,6 +187,7 @@ function CreateHouse(
     (event) => onMouseClick(event, house, buildingId),
     false
   );
+
   return house;
 }
 

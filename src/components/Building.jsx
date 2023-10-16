@@ -137,7 +137,7 @@ const Building = () => {
   boundaryMesh3.position.set(-8.95, 4, 22);
 
   // defin the Material of shades
-  const shadesMaterial = new THREE.MeshPhysicalMaterial({ color: 0xe3e6e0 });
+  const shadesMaterial = new THREE.MeshPhysicalMaterial({ color: 0x1521ab });
   // F2F3F3
   const shadesMesh = new THREE.Mesh(shadesGeometry, shadesMaterial);
   shadesMesh.position.set(-2.65, -1, 28);
