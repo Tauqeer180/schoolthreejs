@@ -199,8 +199,8 @@ function App() {
     directionalLight.shadow.camera.bottom = -45;
 
     // Optional: Add a helper to visualize the light's position and direction
-    // var helper = new THREE.DirectionalLightHelper(directionalLight, 10);
-    // scene.add(helper);
+  // const  helper = new THREE.DirectionalLightHelper(directionalLight, 10);
+  //   scene.add(helper);
 
     camera.position.set(20, 20, 0);
     scene.position.set(-10, 0, 0);
