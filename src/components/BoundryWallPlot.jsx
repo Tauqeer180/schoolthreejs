@@ -38,7 +38,7 @@ export default function BoundryWallPlot() {
   const grassFloorGeometry = new THREE.BoxGeometry(
     roomSize * 18,
     wallThickness,
-    roomSize * 25
+    roomSize * 50
   );
   const grassFloor = new THREE.Mesh(grassFloorGeometry, grassMaterial);
   grassFloor.receiveShadow = true;
@@ -47,7 +47,7 @@ export default function BoundryWallPlot() {
   const leftSchoolWallGeometry = new THREE.BoxGeometry(
     wallThickness * 5,
     roomSize,
-    roomSize * 24.85
+    roomSize * 50
   );
   const frontSchoolWallGeometry = new THREE.BoxGeometry(
     roomSize * 18,
@@ -59,9 +59,9 @@ export default function BoundryWallPlot() {
   const rightSchoolWall = leftSchoolWall.clone();
   rightSchoolWall.position.x = roomSize * 9;
   const frontSchoolWall = new THREE.Mesh(frontSchoolWallGeometry, wallMaterial);
-  frontSchoolWall.position.z = roomSize * 12.45;
+  frontSchoolWall.position.z = roomSize * 25;
   const backSchoolWall = frontSchoolWall.clone();
-  backSchoolWall.position.z = -roomSize * 12.45;
+  backSchoolWall.position.z = -roomSize * 25;
 
   const wallGroup = new THREE.Group();
   wallGroup.add(
