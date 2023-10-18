@@ -30,7 +30,7 @@ export function CloneTree() {
   const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
   trunk.position.set(0, -5, 0);
   const geometry = new THREE.ConeGeometry(5, 10, 5);
-  const material = new THREE.MeshBasicMaterial({ color: 0x455538 });
+  const material = new THREE.MeshBasicMaterial({ color: 0x688862 });
   const cone = new THREE.Mesh(geometry, material);
   cone.castShadow = true;
   trunk.castShadow = true;
