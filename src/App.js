@@ -11,7 +11,8 @@ import { Floor, FloorCircle, PentgonFloor } from "./components/Floor";
 import { CloneMultipleTree, CloneTree, Tree } from "./components/Tree";
 import CreateHouse from "./components/MutilpleBuilding";
 import Road from "./components/Road";
-
+import RiverCanel from "./components/River";
+import skyImg from "./assets/download_1.jpeg";
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
@@ -45,14 +46,15 @@ function App() {
   ];
   useEffect(() => {
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf6eedc);
-
+    // scene.background = new THREE.Color(0xf6eedc);
+    scene.background = new THREE.TextureLoader().load(skyImg);
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
+
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.shadowMap.enabled = true; // Enable shadow mapping in the renderer
     renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Use PCF type shadow mapping
@@ -76,8 +78,24 @@ function App() {
     floorCircles.position.set(0, -1.75, -65);
 
     const pentgonFloors = PentgonFloor();
-    pentgonFloors.position.set(0, -1.95, -65);
-    scene.add(floorBuilding, floorCircles, pentgonFloors);
+    pentgonFloors.position.set(0, -1.95, -70);
+
+    // here is defined  river
+    const riverSide = RiverCanel();
+    riverSide.position.set(-1, -1, -40);
+
+    scene.add(floorBuilding, floorCircles, pentgonFloors, riverSide);
+
+    // adding the sky code
+    // const sphereMaterial = new THREE.MeshBasicMaterial({
+    //   map: new THREE.TextureLoader().load(skyImg),
+    //   fog: false,
+    // });
+    // const sphereGeometry = new THREE.SphereGeometry(30000);
+    // sphereGeometry.scale(-1, 1, 1);
+    // const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    // sphere.rotateY(Math.PI / 4);
+    // scene.add(sphere);
 
     // defin the roadPath
     const roadPath = Road();
@@ -150,7 +168,7 @@ function App() {
     const coneTree2 = CloneTree();
     const coneTree3 = CloneTree();
     const coneTree4 = CloneTree();
-    const coneTree5 = CloneTree();
+    // const coneTree5 = CloneTree();
 
     const CloneMultiple = CloneMultipleTree();
     const CloneMultiple1 = CloneMultipleTree();
@@ -172,7 +190,7 @@ function App() {
     coneTree2.position.set(20, 8, 35);
     coneTree3.position.set(-20, 8, 30);
     coneTree4.position.set(15, 8, -25);
-    coneTree5.position.set(-9, 6, -65);
+    // coneTree5.position.set(-9, 6, -65);
 
     CloneMultiple.position.set(10, 0, 35);
     CloneMultiple1.position.set(-15, 0, 35);
@@ -193,7 +211,7 @@ function App() {
       coneTree2,
       coneTree3,
       coneTree4,
-      coneTree5,
+
       CloneMultiple,
       CloneMultiple1,
       CloneMultiple2,
@@ -206,6 +224,7 @@ function App() {
     const BoundryWallGroup = BoundryWallPlot();
     BoundryWallGroup.receiveShadow = true;
     scene.add(BoundryWallGroup);
+
     // Boundry Wall Plot
     scene.add(new THREE.AmbientLight(0xf1f2f3, 0.7));
 
