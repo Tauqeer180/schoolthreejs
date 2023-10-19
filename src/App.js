@@ -46,8 +46,8 @@ function App() {
   ];
   useEffect(() => {
     const scene = new THREE.Scene();
-    // scene.background = new THREE.Color(0xf6eedc);
-    scene.background = new THREE.TextureLoader().load(skyImg);
+    scene.background = new THREE.Color(0xf6eedc);
+    // scene.background = new THREE.TextureLoader().load(skyImg);
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
@@ -82,7 +82,7 @@ function App() {
 
     // here is defined  river
     const riverSide = RiverCanel();
-    riverSide.position.set(-1, -1, -40);
+    riverSide.position.set(-1,-1.25, -40);
 
     scene.add(floorBuilding, floorCircles, pentgonFloors, riverSide);
 
@@ -253,10 +253,10 @@ function App() {
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.maxDistance = 100;
     orbit.minDistance = 10;
-    // orbit.maxPolarAngle = Math.PI / 2;
+    orbit.maxPolarAngle = Math.PI / 2;
     orbit.update();
-    const axesHelper = new THREE.AxesHelper(20);
-    scene.add(axesHelper);
+    // const axesHelper = new THREE.AxesHelper(20);
+    // scene.add(axesHelper);
     const animate = function () {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
