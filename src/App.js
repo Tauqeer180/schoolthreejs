@@ -96,7 +96,6 @@ function App() {
     // const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     // sphere.rotateY(Math.PI / 4);
     // scene.add(sphere);
-
     // defin the roadPath
     const roadPath = Road();
     roadPath.position.set(10, -1.75, 4);
