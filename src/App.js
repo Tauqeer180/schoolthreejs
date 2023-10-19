@@ -13,6 +13,7 @@ import CreateHouse from "./components/MutilpleBuilding";
 import Road from "./components/Road";
 import RiverCanel from "./components/River";
 import skyImg from "./assets/download_1.jpeg";
+import { River } from "./components/River_T";
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
