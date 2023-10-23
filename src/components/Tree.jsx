@@ -1,8 +1,9 @@
 import * as THREE from "three";
 import grassImg from "../assets/grass.webp";
 export function Tree() {
-  const trunkGeometry = new THREE.CylinderGeometry(0.5, 0.1, 5, 5);
-  const leavesGeometry = new THREE.SphereGeometry(2, 20, 50);
+  const trunkGeometry = new THREE.CylinderGeometry(0.5, 0.5, 4, 4);
+  // const leavesGeometry = new THREE.SphereGeometry(2, 20, 50);
+const leavesGeometry = new THREE.DodecahedronBufferGeometry(3, 0);
 
   const trunkMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
   const leavesMaterial = new THREE.MeshBasicMaterial({ color: 0x7d9268 });
@@ -12,7 +13,7 @@ export function Tree() {
   trunk.receiveShadow = true;
 
   const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
-  leaves.position.set(0, 2, 0);
+  leaves.position.set(0, 3, 0);
 
   leaves.castShadow = true;
   leaves.receiveShadow = true;

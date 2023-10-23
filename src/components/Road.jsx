@@ -38,9 +38,9 @@ const Road = () => {
   pentaShape.lineTo(5, 5);
   pentaShape.lineTo(0, 5);
 
-  const pentaGeometry = new THREE.ExtrudeGeometry(pentaShape, { depth: 0 });
-//   const axesHelper = new THREE.AxesHelper(20);
 
+const pentaGeometry = new THREE.ExtrudeGeometry(pentaShape, { depth: 0 });
+//   const axesHelper = new THREE.AxesHelper(20);
   //   pentaGeometry.rotateY(-Math.PI / 2);
   const roadMaterial = new THREE.MeshPhongMaterial({
     color: "0xadacac",
