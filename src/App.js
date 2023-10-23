@@ -11,8 +11,7 @@ import { Floor, FloorCircle, PentgonFloor } from "./components/Floor";
 import { CloneMultipleTree, CloneTree, Tree } from "./components/Tree";
 import CreateHouse from "./components/MutilpleBuilding";
 import Road from "./components/Road";
-import { RiverCanel,  RiverOtherside } from "./components/River"; 
-// import skyImg from "./assets/download_1.jpeg";
+import {RiverCanel} from "./components/River";
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
@@ -95,11 +94,9 @@ function App() {
 
     // here is defined  river
     const riverSide = RiverCanel();
-    riverSide.position.set(0, -3, -40);
-    // const ocean = RiverOtherside();
-    // ocean.position.set(-1, -0.25, 40);
+    riverSide.position.set(0,-1.25, -40);
 
-    scene.add(floorBuilding, floorCircles, pentgonFloors, riverSide );
+    scene.add(floorBuilding, floorCircles, pentgonFloors, riverSide);
     // defin the roadPath
     const roadPath = Road();
     roadPath.position.set(10, -1.75, 4);
