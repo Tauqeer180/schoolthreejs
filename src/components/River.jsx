@@ -6,8 +6,8 @@ const RiverCanel = () => {
   let simplex = createNoise3D();
   const width = 71.25;
   const length = 13;
-  const segmentsWidth = 15.25;
-  const segmentsLength = 35;
+  const segmentsWidth = 5;
+  const segmentsLength = 5;
 
   let v3 = new THREE.Vector3();
   let v2 = new THREE.Vector2();

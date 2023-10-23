@@ -83,20 +83,9 @@ function App() {
 
     // here is defined  river
     const riverSide = RiverCanel();
-    riverSide.position.set(-1,-1.25, -40);
+    riverSide.position.set(0,-1.25, -40);
 
     scene.add(floorBuilding, floorCircles, pentgonFloors, riverSide);
-
-    // adding the sky code
-    // const sphereMaterial = new THREE.MeshBasicMaterial({
-    //   map: new THREE.TextureLoader().load(skyImg),
-    //   fog: false,
-    // });
-    // const sphereGeometry = new THREE.SphereGeometry(30000);
-    // sphereGeometry.scale(-1, 1, 1);
-    // const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    // sphere.rotateY(Math.PI / 4);
-    // scene.add(sphere);
     // defin the roadPath
     const roadPath = Road();
     roadPath.position.set(10, -1.75, 4);
