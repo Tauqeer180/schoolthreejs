@@ -11,9 +11,7 @@ import { Floor, FloorCircle, PentgonFloor } from "./components/Floor";
 import { CloneMultipleTree, CloneTree, Tree } from "./components/Tree";
 import CreateHouse from "./components/MutilpleBuilding";
 import Road from "./components/Road";
-import RiverCanel from "./components/River";
-import skyImg from "./assets/download_1.jpeg";
-import { River } from "./components/River_T";
+import {RiverCanel} from "./components/River";
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
@@ -49,9 +47,14 @@ function App() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf6eedc);
     // scene.background = new THREE.TextureLoader().load(skyImg);
+    const size = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
     const camera = new THREE.PerspectiveCamera(
       75,
-      window.innerWidth / window.innerHeight,
+      // window.innerWidth / window.innerHeight,
+      size.width / size.height,
       0.1,
       1000
     );
@@ -59,7 +62,15 @@ function App() {
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.shadowMap.enabled = true; // Enable shadow mapping in the renderer
     renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Use PCF type shadow mapping
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(size.width, size.height);
+
+    window.addEventListener("resize", () => {
+      size.innerWidth = window.innerWidth;
+      size.innerHeight = window.innerHeight;
+      camera.aspect = size.width / size.height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(size.width, size.height);
+    });
 
     document
       .getElementById("threeJsComponent")
@@ -240,9 +251,10 @@ function App() {
     scene.position.set(-10, 0, 0);
     camera.lookAt(scene.position);
     const orbit = new OrbitControls(camera, renderer.domElement);
+
     orbit.maxDistance = 100;
     orbit.minDistance = 10;
-    orbit.maxPolarAngle = Math.PI / 2;
+    // orbit.maxPolarAngle = Math.PI / 2;
     orbit.update();
     // const axesHelper = new THREE.AxesHelper(20);
     // scene.add(axesHelper);

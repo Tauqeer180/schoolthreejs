@@ -1,15 +1,12 @@
 import * as THREE from "three";
-// import { createNoise3D } from "https://cdn.skypack.dev/simplex-noise";
-import { createNoise3D } from 'simplex-noise';
-const RiverCanel = () => {
+import { createNoise3D } from "simplex-noise";
+export const RiverCanel = () => {
   // const waterGroup = new THREE.Group();
   let simplex = createNoise3D();
   const width = 71.25;
   const length = 13;
-  const segmentsWidth = 5;
-  const segmentsLength = 5;
-
-  let v3 = new THREE.Vector3();
+  const segmentsWidth =3;
+  const segmentsLength =3;
   let v2 = new THREE.Vector2();
   // 1st length value , 2nd width vlaue , 3rd roughness of water  , 4th value of more rough texture
   // let g = new THREE.PlaneGeometry(71.25, 13,
@@ -21,7 +18,7 @@ const RiverCanel = () => {
     segmentsLength
   );
   g.rotateX(-Math.PI * 0.5);
-  let m = new THREE.MeshLambertMaterial({ color: "aqua", wireframe: false });
+  let m = new THREE.MeshLambertMaterial({ color: "CornflowerBlue" });
   let o = new THREE.Mesh(g, m);
   let clock = new THREE.Clock();
   let t = clock.getElapsedTime();
@@ -34,9 +31,7 @@ const RiverCanel = () => {
   }
   g.computeVertexNormals();
   g.attributes.position.needsUpdate = true;
- 
 
   return o;
 };
 
-export default RiverCanel;
