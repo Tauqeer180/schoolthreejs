@@ -39,38 +39,55 @@ export const RiverCanel = () => {
 export const RiverOcan = () => {
   const zigzagPlane = new THREE.Group();
   const pentaShape = new THREE.Shape();
-  pentaShape.moveTo(0, 0); // Bottom left
 
-  pentaShape.lineTo(5, 0);
+  pentaShape.moveTo(0, -80); // Bottom left
 
-  pentaShape.lineTo(10, 0);
+  pentaShape.lineTo(5, -75);
+
+  pentaShape.lineTo(10, -70);
   // upper lines
-  pentaShape.lineTo(11, -1);
-  pentaShape.lineTo(12, -2);
-  pentaShape.lineTo(13, -3);
-  pentaShape.lineTo(14, -4);
-  pentaShape.lineTo(15, -5);
-  
-  // pentaShape.lineTo(20, -5);
+  pentaShape.lineTo(12, -65);
+  pentaShape.lineTo(15, -60);
+  pentaShape.lineTo(18, -52);
+  pentaShape.lineTo(20, -50);
+  pentaShape.lineTo(23, -43);
 
-  pentaShape.lineTo(74, -5);
+  pentaShape.lineTo(25, -40);
+  pentaShape.lineTo(28, -35);
+  pentaShape.lineTo(40, -26);
+  pentaShape.lineTo(45, -24.5);
+  pentaShape.lineTo(50, -20);
+  pentaShape.lineTo(55, -15);
+  pentaShape.lineTo(60, -10);
   pentaShape.lineTo(74, -4);
-  pentaShape.lineTo(74, -3);
-  pentaShape.lineTo(74, -2);
-  pentaShape.lineTo(74, -1);
+  pentaShape.lineTo(80, 0);
+  pentaShape.lineTo(84, 2);
+  pentaShape.lineTo(90, 5);
+  pentaShape.lineTo(100, 10);
+  pentaShape.lineTo(100, 30);
 
-  // bottom lines
-  pentaShape.lineTo(74, 0);
-  pentaShape.lineTo(20, 0);
-  pentaShape.lineTo(15, 0);
-  pentaShape.lineTo(14, 1);
-  pentaShape.lineTo(13, 2);
-  pentaShape.lineTo(12, 3);
-  pentaShape.lineTo(11, 4);
-  pentaShape.lineTo(10, 5);
+  pentaShape.lineTo(90, 25);
+  pentaShape.lineTo(84, 22);
+  pentaShape.lineTo(80, 16);
+  pentaShape.lineTo(74, 14);
+  pentaShape.lineTo(60, 10);
+  pentaShape.lineTo(55, 5);
+  pentaShape.lineTo(50, 0);
+  pentaShape.lineTo(45, -5);
+  pentaShape.lineTo(40, -10);
+  pentaShape.lineTo(28, -12);
+  pentaShape.lineTo(25, -15);
+  pentaShape.lineTo(23, -20);
 
-  pentaShape.lineTo(5, 5);
-  pentaShape.lineTo(0, 5);
+  pentaShape.lineTo(20, -25);
+  pentaShape.lineTo(15, -30);
+  // pentaShape.lineTo(12, -32);
+
+  pentaShape.lineTo(10, -36);
+
+  pentaShape.lineTo(5, -45);
+  pentaShape.lineTo(0, -55);
+  pentaShape.lineTo(0, -80);
 
   const pentaGeometry = new THREE.ExtrudeGeometry(pentaShape, { depth: 0 });
   //   const axesHelper = new THREE.AxesHelper(20);
