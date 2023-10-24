@@ -12,6 +12,7 @@ import { CloneMultipleTree, CloneTree, Tree } from "./components/Tree";
 import CreateHouse from "./components/MutilpleBuilding";
 import Road from "./components/Road";
 import { RiverCanel, RiverOcan } from "./components/River";
+import Text from "./components/Text";
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
@@ -97,9 +98,9 @@ function App() {
     riverSide.position.set(0, -1.25, -40);
 
     const riverbe = RiverOcan();
-    riverbe.position.set(-39, -2, 80);
+    riverbe.position.set(-55, -2, 80);
 
-    scene.add(floorBuilding, floorCircles, pentgonFloors, riverSide, riverbe);
+    scene.add(floorBuilding, floorCircles, pentgonFloors, riverbe);
     // defin the roadPath
     const roadPath = Road();
     roadPath.position.set(10, -1.75, 4);
@@ -171,7 +172,7 @@ function App() {
     const coneTree2 = CloneTree();
     const coneTree3 = CloneTree();
     const coneTree4 = CloneTree();
-    // const coneTree5 = CloneTree();
+    const coneTree5 = CloneTree();
 
     const CloneMultiple = CloneMultipleTree();
     const CloneMultiple1 = CloneMultipleTree();
@@ -182,6 +183,16 @@ function App() {
     const CloneMultiple5 = CloneMultipleTree();
     const CloneMultiple6 = CloneMultipleTree();
 
+    const CloneMultiple7 = CloneMultipleTree();
+
+    /**
+     * river tree
+     */
+    const CloneMultiple8 = CloneMultipleTree();
+
+    /**
+     * TREE  POSITION
+     */
     treeObject1.position.set(-20, 0, -30);
     treeObject2.position.set(12, 0, -10);
     treeObject3.position.set(10, 0, 30);
@@ -193,7 +204,7 @@ function App() {
     coneTree2.position.set(20, 10, 35);
     coneTree3.position.set(-20, 10, 30);
     coneTree4.position.set(15, 10, -25);
-    // coneTree5.position.set(-9, 6, -65);
+    coneTree5.position.set(0, 10, 50);
 
     CloneMultiple.position.set(10, 0, 35);
     CloneMultiple1.position.set(-15, 0, 35);
@@ -202,6 +213,13 @@ function App() {
     CloneMultiple4.position.set(22, 0, -20);
     CloneMultiple5.position.set(0, 0, -75);
     CloneMultiple6.position.set(0, 0, -65);
+    CloneMultiple7.position.set(0, 0, 65);
+
+    /**
+     * tree in river side
+     */
+
+    CloneMultiple8.position.set(0, 0, 86);
 
     scene.add(
       treeObject1,
@@ -214,6 +232,7 @@ function App() {
       coneTree2,
       coneTree3,
       coneTree4,
+      coneTree5,
 
       CloneMultiple,
       CloneMultiple1,
@@ -221,12 +240,22 @@ function App() {
       CloneMultiple3,
       CloneMultiple4,
       CloneMultiple5,
-      CloneMultiple6
+      CloneMultiple6,
+      CloneMultiple7,
+      CloneMultiple8
     );
     // Boundary Wall Plot
     const BoundryWallGroup = BoundryWallPlot();
     BoundryWallGroup.receiveShadow = true;
-    scene.add(BoundryWallGroup);
+
+    /**
+     * Text
+     */
+    const textElem = Text();
+    textElem.position.set(-50, 2, -40);
+    textElem.rotateY((Math.PI / 3) );
+    // textElem.rotation.set(0, Math.PI/2, 0);
+    scene.add(BoundryWallGroup, textElem);
 
     // Boundry Wall Plot
     scene.add(new THREE.AmbientLight(0xf1f2f3, 0.7));

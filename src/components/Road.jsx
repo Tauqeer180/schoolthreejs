@@ -19,11 +19,11 @@ const Road = () => {
 
   pentaShape.lineTo(20, -5);
 
-  pentaShape.lineTo(25.5, -5);
-  pentaShape.lineTo(25.5, -4);
-  pentaShape.lineTo(25.5, -3);
-  pentaShape.lineTo(25.5, -2);
-  pentaShape.lineTo(25.5, -1);
+  pentaShape.lineTo(32, -7);
+  pentaShape.lineTo(32, -4);
+  pentaShape.lineTo(32, -3);
+  pentaShape.lineTo(32, -2);
+  pentaShape.lineTo(32, -1);
   
   // bottom lines 
   pentaShape.lineTo(25.5, 0);

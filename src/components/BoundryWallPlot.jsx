@@ -27,7 +27,7 @@ export default function BoundryWallPlot() {
     roomSize * 3
   );
   const gateMesh = new THREE.Mesh(gateGeometry, gateMaterial);
-  gateMesh.position.set(36, 0.1, roomSize / 2 - 2);
+  gateMesh.position.set(42.75, 0.1, roomSize / 2 - 2);
   // repeat texture
   grassTexture.wrapS = THREE.RepeatWrapping;
   grassTexture.wrapT = THREE.RepeatWrapping;
@@ -36,32 +36,35 @@ export default function BoundryWallPlot() {
   // Gate Code End Here
 
   const grassFloorGeometry = new THREE.BoxGeometry(
-    roomSize * 18,
+    roomSize * 25,
     wallThickness,
     roomSize * 50
   );
   const grassFloor = new THREE.Mesh(grassFloorGeometry, grassMaterial);
   grassFloor.receiveShadow = true;
+  grassFloor.position.x = -roomSize * 2;
   grassFloor.position.y = -roomSize / 2;
 
   const leftSchoolWallGeometry = new THREE.BoxGeometry(
-    wallThickness * 5,
+    wallThickness * 10,
     roomSize,
     roomSize * 50
   );
   const frontSchoolWallGeometry = new THREE.BoxGeometry(
-    roomSize * 18,
+    roomSize * 24.5,
     roomSize,
-    wallThickness
+    wallThickness * 10
   );
   const leftSchoolWall = new THREE.Mesh(leftSchoolWallGeometry, wallMaterial);
-  leftSchoolWall.position.x = -roomSize * 9;
+  leftSchoolWall.position.x = -roomSize * 14;
   const rightSchoolWall = leftSchoolWall.clone();
-  rightSchoolWall.position.x = roomSize * 9;
+  rightSchoolWall.position.x = roomSize * 10.5 ;
   const frontSchoolWall = new THREE.Mesh(frontSchoolWallGeometry, wallMaterial);
   frontSchoolWall.position.z = roomSize * 25;
+  frontSchoolWall.position.x = -roomSize * 2;
   const backSchoolWall = frontSchoolWall.clone();
   backSchoolWall.position.z = -roomSize * 25;
+  // const axesHelper = new THREE.AxesHelper(20);
 
   const wallGroup = new THREE.Group();
   wallGroup.add(
@@ -70,7 +73,8 @@ export default function BoundryWallPlot() {
     rightSchoolWall,
     frontSchoolWall,
     backSchoolWall,
-    gateMesh
+    gateMesh,
+    // axesHelper
   );
   return wallGroup;
 }
