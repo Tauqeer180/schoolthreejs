@@ -13,6 +13,7 @@ import CreateHouse from "./components/MutilpleBuilding";
 import Road from "./components/Road";
 import { RiverCanel, RiverOcan } from "./components/River";
 import Text from "./components/Text";
+import GrassLand from "./components/GrassLand";
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
@@ -76,12 +77,12 @@ function App() {
     document
       .getElementById("threeJsComponent")
       .appendChild(renderer.domElement);
-    // value of room and thickness
-
+    /**
+     * cubes building
+     */
     const spacing = 8;
-    // cubes building
+
     const cubeBuilding = Building();
-    scene.add(cubeBuilding);
 
     //Define floor
     const floorBuilding = Floor();
@@ -100,12 +101,17 @@ function App() {
     const riverbe = RiverOcan();
     riverbe.position.set(-55, -2, 80);
 
-    scene.add(floorBuilding, floorCircles, pentgonFloors, riverbe);
     // defin the roadPath
     const roadPath = Road();
     roadPath.position.set(10, -1.75, 4);
 
-    scene.add(roadPath);
+    /**Rock land  */
+    const rock = GrassLand();
+    // rock.position.x = 0;
+ 
+    rock.position.y = -2;
+ 
+
     function onDocumentMouseWheel(event) {
       camera.position.z = 0; // Adjust the factor (0.1) as needed for the zoom speed
       renderer.render(scene, camera);
@@ -157,12 +163,12 @@ function App() {
       scene,
       renderer
     );
-    scene.add(house, house1, house2, house3);
+
     // Tree Object
     const treeObject1 = Tree();
     const treeObject2 = Tree();
     const treeObject3 = Tree();
-    // FOR THE NEXT FLOOR
+    // For the net floor
     const treeObject4 = Tree();
     const treeObject5 = Tree();
 
@@ -253,31 +259,48 @@ function App() {
      */
     const textElem = Text();
     textElem.position.set(-50, 2, -40);
-    textElem.rotateY((Math.PI / 3) );
-    // textElem.rotation.set(0, Math.PI/2, 0);
-    scene.add(BoundryWallGroup, textElem);
+    textElem.rotateY(Math.PI / 3);
 
-    // Boundry Wall Plot
+    /**Boundry Wall Plot */
     scene.add(new THREE.AmbientLight(0xf1f2f3, 0.7));
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Color, Intensity
     directionalLight.position.set(-22, 30, 30); // Set position of the light
     directionalLight.castShadow = true; // Enable the light to cast shadows
-    scene.add(directionalLight);
 
     // Set up the shadow properties for the light
     directionalLight.shadow.mapSize.width = 1024; // default is 512
     directionalLight.shadow.mapSize.height = 1024; // default is 512
     directionalLight.shadow.camera.near = 0.1; // default is 0.5
     // directionalLight.shadow.camera.far = 50; // default is 500
-    directionalLight.shadow.camera.left = -45;
-    directionalLight.shadow.camera.right = 45;
-    directionalLight.shadow.camera.top = 45;
-    directionalLight.shadow.camera.bottom = -45;
+    directionalLight.shadow.camera.left = -100;
+    directionalLight.shadow.camera.right = 100;
+    directionalLight.shadow.camera.top = 100;
+    directionalLight.shadow.camera.bottom = -100;
 
-    // Optional: Add a helper to visualize the light's position and direction
+    /** Optional: Add a helper to visualize the light's position and direction*/
     // const  helper = new THREE.DirectionalLightHelper(directionalLight, 10);
     //   scene.add(helper);
+
+    /**
+     * Scene
+     */
+    scene.add(
+      house,
+      house1,
+      house2,
+      house3,
+      directionalLight,
+      cubeBuilding,
+      BoundryWallGroup,
+      textElem,
+      roadPath,
+      floorBuilding,
+      floorCircles,
+      pentgonFloors,
+      riverbe,
+      rock
+    );
 
     camera.position.set(20, 20, 0);
     scene.position.set(-10, 0, 0);
@@ -286,7 +309,7 @@ function App() {
 
     orbit.maxDistance = 100;
     orbit.minDistance = 10;
-    orbit.maxPolarAngle = Math.PI / 2;
+    // orbit.maxPolarAngle = Math.PI / 2;
     orbit.update();
     // const axesHelper = new THREE.AxesHelper(20);
     // scene.add(axesHelper);

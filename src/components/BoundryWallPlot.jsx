@@ -1,5 +1,4 @@
-import React from "react";
-import * as THREE from "three";
+ import * as THREE from "three";
 import schoolGate from "../assets/school-gate.png";
 import wallImg from "../assets/wall.jpeg";
 import grassImg from "../assets/grass.webp";
@@ -10,7 +9,7 @@ export default function BoundryWallPlot() {
 
   const textureLoader = new THREE.TextureLoader();
 
-  // Gate Code Start
+  /**Gate Code Start*/
   const gateTextre = textureLoader.load(schoolGate);
   const gateMaterial = new THREE.MeshLambertMaterial({ map: gateTextre });
   const walltexture = textureLoader.load(wallImg);
@@ -27,13 +26,15 @@ export default function BoundryWallPlot() {
     roomSize * 3
   );
   const gateMesh = new THREE.Mesh(gateGeometry, gateMaterial);
-  gateMesh.position.set(42.75, 0.1, roomSize / 2 - 2);
+  gateMesh.position.set(42 + 0.2, 0.1, roomSize / 2 - 2);
   // repeat texture
   grassTexture.wrapS = THREE.RepeatWrapping;
   grassTexture.wrapT = THREE.RepeatWrapping;
   grassTexture.repeat.set(roomSize * 2, roomSize * 2.7);
 
-  // Gate Code End Here
+  /**
+   * Gate
+   */
 
   const grassFloorGeometry = new THREE.BoxGeometry(
     roomSize * 25,
@@ -58,7 +59,7 @@ export default function BoundryWallPlot() {
   const leftSchoolWall = new THREE.Mesh(leftSchoolWallGeometry, wallMaterial);
   leftSchoolWall.position.x = -roomSize * 14;
   const rightSchoolWall = leftSchoolWall.clone();
-  rightSchoolWall.position.x = roomSize * 10.5 ;
+  rightSchoolWall.position.x = roomSize * 10.5;
   const frontSchoolWall = new THREE.Mesh(frontSchoolWallGeometry, wallMaterial);
   frontSchoolWall.position.z = roomSize * 25;
   frontSchoolWall.position.x = -roomSize * 2;
@@ -73,7 +74,7 @@ export default function BoundryWallPlot() {
     rightSchoolWall,
     frontSchoolWall,
     backSchoolWall,
-    gateMesh,
+    gateMesh
     // axesHelper
   );
   return wallGroup;
