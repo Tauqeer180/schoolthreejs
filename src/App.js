@@ -89,6 +89,7 @@ function App() {
     floorBuilding.position.set(0, -1.95, 5);
 
     const floorCircles = FloorCircle();
+    // floorCircles.receiveShadow = true;
     floorCircles.position.set(0, -1.75, -65);
 
     const pentgonFloors = PentgonFloor();
@@ -107,10 +108,9 @@ function App() {
 
     /**Rock land  */
     const rock = GrassLand();
-    // rock.position.x = 0;
- 
+    rock.position.x = -110;
+
     rock.position.y = -2;
- 
 
     function onDocumentMouseWheel(event) {
       camera.position.z = 0; // Adjust the factor (0.1) as needed for the zoom speed
@@ -265,22 +265,24 @@ function App() {
     scene.add(new THREE.AmbientLight(0xf1f2f3, 0.7));
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Color, Intensity
-    directionalLight.position.set(-22, 30, 30); // Set position of the light
+    directionalLight.position.set(-250, 250, 200); // Set position of the light
     directionalLight.castShadow = true; // Enable the light to cast shadows
 
     // Set up the shadow properties for the light
-    directionalLight.shadow.mapSize.width = 1024; // default is 512
-    directionalLight.shadow.mapSize.height = 1024; // default is 512
+    directionalLight.shadow.mapSize.width = 4096; // default is 512 //Resoluton of Shadow
+    directionalLight.shadow.mapSize.height = 4096; // default is 512 //Resolution
     directionalLight.shadow.camera.near = 0.1; // default is 0.5
-    // directionalLight.shadow.camera.far = 50; // default is 500
-    directionalLight.shadow.camera.left = -100;
-    directionalLight.shadow.camera.right = 100;
-    directionalLight.shadow.camera.top = 100;
-    directionalLight.shadow.camera.bottom = -100;
+    // directionalLight.shadow.camera.far = 1000; // default is 500
+
+    // Size of Light
+    directionalLight.shadow.camera.left = -500;
+    directionalLight.shadow.camera.right = 500;
+    directionalLight.shadow.camera.top = 500;
+    directionalLight.shadow.camera.bottom = -500;
 
     /** Optional: Add a helper to visualize the light's position and direction*/
-    // const  helper = new THREE.DirectionalLightHelper(directionalLight, 10);
-    //   scene.add(helper);
+    // const helper = new THREE.DirectionalLightHelper(directionalLight, 10);
+    // scene.add(helper);
 
     /**
      * Scene
@@ -302,14 +304,14 @@ function App() {
       rock
     );
 
-    camera.position.set(20, 20, 0);
+    camera.position.set(70, 50, 0);
     scene.position.set(-10, 0, 0);
     camera.lookAt(scene.position);
     const orbit = new OrbitControls(camera, renderer.domElement);
 
-    orbit.maxDistance = 100;
+    orbit.maxDistance = 115;
     orbit.minDistance = 10;
-    // orbit.maxPolarAngle = Math.PI / 2;
+    orbit.maxPolarAngle = Math.PI / 2;
     orbit.update();
     // const axesHelper = new THREE.AxesHelper(20);
     // scene.add(axesHelper);

@@ -4,8 +4,8 @@ function GrassLand() {
   const rockLand = new THREE.Group();
   const textureLoader = new THREE.TextureLoader();
   const grassTexture = textureLoader.load(grassImg);
-  const width = 200;
-  const depth = 400;
+  const width = 400;
+  const depth = 800;
   const widthSegments = 50;
   const depthSegments = 50;
 
@@ -19,10 +19,11 @@ function GrassLand() {
   );
   grassTexture.wrapS = THREE.RepeatWrapping;
   grassTexture.wrapT = THREE.RepeatWrapping;
-  grassTexture.repeat.set(4 * 2, 4 * 2.7);
+  grassTexture.repeat.set(4 * 4, 4 * 4);
 
   const material = new THREE.MeshLambertMaterial({
-  map: grassTexture ,
+    map: grassTexture,
+    // color: "green",
     wireframe: false,
     side: THREE.DoubleSide,
   });
@@ -54,12 +55,12 @@ function GrassLand() {
 
   //   geometry.computeFaceNormals();
   geometry.computeVertexNormals();
-  const axesHelper = new THREE.AxesHelper(20);
+  // const axesHelper = new THREE.AxesHelper(20);
 
   plane.castShadow = true;
   plane.receiveShadow = true;
   plane.rotateX(-Math.PI / 2);
-  rockLand.add(plane, axesHelper);
+  rockLand.add(plane);
 
   return rockLand;
 }

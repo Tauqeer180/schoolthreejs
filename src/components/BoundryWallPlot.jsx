@@ -1,4 +1,4 @@
- import * as THREE from "three";
+import * as THREE from "three";
 import schoolGate from "../assets/school-gate.png";
 import wallImg from "../assets/wall.jpeg";
 import grassImg from "../assets/grass.webp";
@@ -30,7 +30,7 @@ export default function BoundryWallPlot() {
   // repeat texture
   grassTexture.wrapS = THREE.RepeatWrapping;
   grassTexture.wrapT = THREE.RepeatWrapping;
-  grassTexture.repeat.set(roomSize * 2, roomSize * 2.7);
+  grassTexture.repeat.set(roomSize * 2, roomSize * 4);
 
   /**
    * Gate
@@ -58,15 +58,28 @@ export default function BoundryWallPlot() {
   );
   const leftSchoolWall = new THREE.Mesh(leftSchoolWallGeometry, wallMaterial);
   leftSchoolWall.position.x = -roomSize * 14;
+
+  leftSchoolWall.castShadow = true;
+  leftSchoolWall.receiveShadow = true;
+
   const rightSchoolWall = leftSchoolWall.clone();
   rightSchoolWall.position.x = roomSize * 10.5;
   const frontSchoolWall = new THREE.Mesh(frontSchoolWallGeometry, wallMaterial);
   frontSchoolWall.position.z = roomSize * 25;
   frontSchoolWall.position.x = -roomSize * 2;
+
+  frontSchoolWall.castShadow = true;
+  frontSchoolWall.receiveShadow = true;
+
   const backSchoolWall = frontSchoolWall.clone();
   backSchoolWall.position.z = -roomSize * 25;
   // const axesHelper = new THREE.AxesHelper(20);
 
+  // grassFloor.castShadow = true;
+  // grassFloor.receiveShadow = true;
+
+  // rightSchoolWall.castShadow = true;
+  // rightSchoolWall.receiveShadow = true;
   const wallGroup = new THREE.Group();
   wallGroup.add(
     grassFloor,
@@ -77,5 +90,6 @@ export default function BoundryWallPlot() {
     gateMesh
     // axesHelper
   );
+
   return wallGroup;
 }
